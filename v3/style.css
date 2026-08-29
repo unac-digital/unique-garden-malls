@@ -212,6 +212,9 @@ address { font-style: normal; }
 }
 .section__title { margin-bottom: var(--space-4); }
 .section__lead { font-size: var(--font-md); color: var(--color-muted); }
+/* Cabeçalho um pouco mais largo, para leads que ficam melhor em uma linha só.
+   Continua responsivo: em telas menores o container limita e o texto quebra. */
+.section__header--wide { max-width: 780px; }
 @media (max-width: 768px) {
   .section, .section-alt, .section-deep { padding: var(--space-12) 0; }
   .section__header { margin-bottom: var(--space-10); }
@@ -423,6 +426,51 @@ address { font-style: normal; }
     var(--color-bg);
   overflow: hidden;
 }
+
+/* ---- Vídeo de fundo do hero ---- */
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* cover recorta o excesso em vez de esticar: o vídeo é 16:9 e o hero muda
+     de proporção conforme a tela. */
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+}
+/* O vídeo é filho posicionado e tapa o gradiente que o .hero pinta no próprio
+   background, então o véu precisa reproduzi-lo. Vai um pouco mais denso que o
+   original porque imagem em movimento atrapalha a leitura mais que cor chapada. */
+/* O 0.80 do topo não é chute: o vídeo tem pixels em branco puro (255) e preto
+   puro (0). Medindo 30 quadros, 0.72 dava 5,37:1 no texto de apoio. Com 0.80 o
+   pior caso possível vai a 7,05:1 (AAA). O rodapé do degradê é mais opaco, logo
+   o topo é sempre o pior caso. */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg,
+    rgba(23, 40, 27, 0.80) 0%,
+    rgba(23, 40, 27, 0.93) 100%);
+}
+/* No tema claro o texto do hero é verde escuro sobre creme: um véu escuro o
+   tornaria ilegível, então o véu inverte junto com a paleta. Aqui o 0.55 do
+   rascunho REPROVAVA (3,53:1) sobre os pixels pretos do vídeo; 0.80 leva a
+   7,26:1. */
+[data-theme="light"] .hero__overlay {
+  background: linear-gradient(180deg,
+    rgba(246, 240, 220, 0.80) 0%,
+    rgba(237, 228, 200, 0.92) 100%);
+}
+/* Quem pediu menos movimento no sistema não vê o vídeo; sobra o fundo do .hero,
+   idêntico ao site sem vídeo. O véu sai junto, senão escureceria esse fundo. */
+@media (prefers-reduced-motion: reduce) {
+  .hero__video,
+  .hero__overlay { display: none; }
+}
+
 .hero__decor {
   position: absolute;
   border-radius: 50%;
@@ -433,14 +481,21 @@ address { font-style: normal; }
 .hero__decor--one { width: 480px; height: 480px; top: -120px; right: -140px; }
 .hero__decor--two { width: 360px; height: 360px; bottom: -140px; left: -100px; background: radial-gradient(circle, rgba(228, 206, 126, 0.18), transparent 70%); }
 
+/* Coluna única e centralizada: a segunda coluna existia para a imagem do hero,
+   que saiu quando o vídeo passou a ser o fundo. Mesmo desenho que as outras
+   páginas já usam no .hero--compact. */
 .hero__inner {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: var(--space-16);
+  grid-template-columns: 1fr;
+  justify-items: center;
   align-items: center;
+  text-align: center;
 }
+/* Limita a linha de texto: sem isso o parágrafo esticaria por toda a largura
+   do container (1280px), o que cansa a leitura. */
+.hero__content { max-width: 820px; }
 .hero__eyebrow {
   font-size: var(--font-sm);
   font-weight: var(--font-semibold);
@@ -456,21 +511,17 @@ address { font-style: normal; }
 .hero__subtitle {
   font-size: var(--font-lg);
   color: var(--color-muted);
-  max-width: 560px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: var(--space-10);
 }
 .hero__cta {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: var(--space-4);
 }
-.hero__media {
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-lift);
-  border: 1px solid var(--color-border);
-}
-.hero__media img { width: 100%; height: 100%; object-fit: cover; }
 
 .hero--compact {
   min-height: calc(100vh - var(--header-h));
@@ -482,13 +533,31 @@ address { font-style: normal; }
 .hero--compact .hero__cta { justify-content: center; }
 
 @media (max-width: 900px) {
-  .hero__inner { grid-template-columns: 1fr; }
-  .hero__media { order: -1; }
-  .hero { min-height: auto; padding: var(--space-16) 0 var(--space-12); }
+  /* Hero ocupando tudo o que sobra abaixo do cabeçalho: ao abrir o site no
+     celular a pessoa vê só esta primeira seção, sem a próxima espiando embaixo.
+     O svh é a altura da tela COM as barras do navegador à mostra, que é
+     justamente o estado de quem acabou de entrar. */
+  .hero {
+    min-height: calc(100vh - var(--header-h));
+    min-height: calc(100svh - var(--header-h));
+    padding: var(--space-12) 0;
+  }
 }
 @media (min-width: 901px) {
-  .hero__media { max-height: calc(100vh - var(--header-h) - var(--space-8) - var(--space-20)); }
   .hero__inner { max-height: calc(100vh - var(--header-h) - var(--space-8) - var(--space-20)); }
+  /* No computador o texto volta a ficar à esquerda, como era quando havia a
+     imagem ao lado. No celular ele segue centralizado. */
+  .hero__inner { justify-items: start; text-align: left; }
+  .hero__subtitle { margin-left: 0; margin-right: 0; }
+  .hero__cta { justify-content: flex-start; }
+}
+@media (max-width: 560px) {
+  /* Botões ocupando a largura toda: em telas estreitas eles quebrariam em duas
+     linhas de tamanhos diferentes, e assim a área de toque fica bem maior. */
+  .hero__cta { flex-direction: column; align-items: stretch; width: 100%; }
+  .hero__cta .btn-primary,
+  .hero__cta .btn-secondary { width: 100%; }
+  .hero__subtitle { margin-bottom: var(--space-8); }
 }
 
 /* ---- Entrada em cascata do hero ---- */
@@ -500,7 +569,6 @@ address { font-style: normal; }
 .hero__title    { animation: heroFadeUp 0.7s ease 0.1s backwards; }
 .hero__subtitle { animation: heroFadeUp 0.7s ease 0.2s backwards; }
 .hero__cta      { animation: heroFadeUp 0.7s ease 0.32s backwards; }
-.hero__media    { animation: heroFadeUp 0.8s ease 0.25s backwards; }
 
 /* ---- Animações ao rolar ---- */
 .anim-fade-up {
@@ -530,7 +598,7 @@ address { font-style: normal; }
     scroll-behavior: auto !important;
   }
   .anim-fade-up, .anim-zoom-in { opacity: 1; transform: none; }
-  .hero__eyebrow, .hero__title, .hero__subtitle, .hero__cta, .hero__media { opacity: 1; }
+  .hero__eyebrow, .hero__title, .hero__subtitle, .hero__cta { opacity: 1; }
 }
 
 /* ---- Estatísticas ---- */
@@ -861,6 +929,16 @@ address { font-style: normal; }
   font-size: var(--font-lg);
   font-weight: var(--font-bold);
   color: var(--color-heading);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+/* Sinaliza que a pergunta é interativa (só em aparelhos com mouse) */
+@media (hover: hover) and (pointer: fine) {
+  .faq-item__question:hover { color: var(--color-accent); }
+  .faq-item__question:hover .faq-item__icon {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
 }
 .faq-item__icon {
   flex-shrink: 0;
@@ -872,7 +950,7 @@ address { font-style: normal; }
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.25s ease;
+  transition: transform 0.25s ease, background-color 0.2s ease, color 0.2s ease;
   font-size: var(--font-md);
 }
 .faq-item__question[aria-expanded="true"] .faq-item__icon { transform: rotate(45deg); }
@@ -1391,8 +1469,14 @@ address { font-style: normal; }
 }
 
 /* ---- Scrollbar personalizada ---- */
-html { scrollbar-width: none; -ms-overflow-style: none; }
-html::-webkit-scrollbar { display: none; }
+/* Esconder a barra do sistema só vale onde a nossa entra no lugar dela (aparelhos
+   com mouse). Em telas de toque a nossa não é criada, então a do celular precisa
+   continuar aparecendo: sem esta media query, um Android que obedecesse a regra
+   deixaria o visitante sem nenhuma barra de rolagem. */
+@media (hover: hover) and (pointer: fine) {
+  html { scrollbar-width: none; -ms-overflow-style: none; }
+  html::-webkit-scrollbar { display: none; }
+}
 .custom-scrollbar-track {
   position: fixed;
   top: var(--header-h);

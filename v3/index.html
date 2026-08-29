@@ -18,7 +18,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&amp;family=Lato:wght@400;600;700&amp;family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏬</text></svg>">
-<link rel="preload" as="image" href="assets/img/empreendimentos/aruja-1.webp" fetchpriority="high">
 <link rel="preload" href="assets/fonts/Queensila.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="stylesheet" href="style.css">
 <script type="application/ld+json">
@@ -155,20 +154,27 @@
 
   <!-- HERO -->
   <section class="hero">
+    <!-- Vídeo decorativo de fundo. Sem poster de propósito: se o navegador não
+         carregar ou bloquear o autoplay, o que aparece é o fundo do .hero,
+         exatamente o site sem vídeo. muted é obrigatório para o autoplay não ser
+         bloqueado; playsinline evita o iOS abrir em tela cheia; aria-hidden e
+         tabindex="-1" mantêm o enfeite fora do leitor de tela e do teclado. -->
+    <video class="hero__video" autoplay muted loop playsinline
+           preload="metadata" aria-hidden="true" tabindex="-1">
+      <source src="assets/video/hero.mp4" type="video/mp4">
+    </video>
+    <div class="hero__overlay" aria-hidden="true"></div>
     <span class="hero__decor hero__decor--one" aria-hidden="true"></span>
     <span class="hero__decor hero__decor--two" aria-hidden="true"></span>
     <div class="container hero__inner">
-      <div>
+      <div class="hero__content">
         <p class="hero__eyebrow">Desde 2008 · Interior e Grande São Paulo</p>
         <h1 class="hero__title" style="font-weight: 700; line-height: 1.05">Power Centers que conectam grandes marcas a rotas de alto fluxo</h1>
-        <p class="hero__subtitle" style="text-align: justify">A Unique Garden Malls desenvolve Power Centers e Open Malls ancorados por marcas como McDonald's, Burger King e Smart Fit. São 18 anos de atuação, 7 empreendimentos operacionais e um pipeline ativo de 5 novos projetos até 2028.</p>
+        <p class="hero__subtitle">A Unique Garden Malls desenvolve Power Centers e Open Malls ancorados por marcas como McDonald's, Burger King e Smart Fit. São 18 anos de atuação, 7 empreendimentos operacionais e um pipeline ativo de 5 novos projetos até 2028.</p>
         <div class="hero__cta">
           <a class="btn-primary" href="investidores.html">Quero investir</a>
           <a class="btn-secondary" href="contato.html">Sou lojista, quero uma parceria</a>
         </div>
-      </div>
-      <div class="hero__media media-frame">
-        <img src="assets/img/empreendimentos/aruja-1.webp" alt="Render do Unique Garden Arujá Mall, empreendimento em desenvolvimento com previsão de inauguração em outubro de 2027" width="860" height="477" fetchpriority="high" loading="eager" decoding="async">
       </div>
     </div>
   </section>
@@ -485,7 +491,7 @@
   <!-- FAQ -->
   <section class="section" aria-labelledby="faq-titulo">
     <div class="container">
-      <div class="section__header">
+      <div class="section__header section__header--wide">
         <p class="section__eyebrow">Dúvidas frequentes</p>
         <h2 id="faq-titulo">Perguntas frequentes</h2>
         <p class="section__lead">O essencial sobre a Unique Garden Malls, o modelo de Power Centers e como participar.</p>

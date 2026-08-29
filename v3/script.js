@@ -5,6 +5,22 @@
 (function () {
   'use strict';
 
+  /* ---- Video de fundo do hero ---- */
+  /* O CSS ja esconde o video no modo "reduzir movimento", mas escondido ele
+     ainda baixaria 1,9 MB. Aqui a fonte e removida antes disso acontecer. */
+  (function () {
+    var heroVideo = document.querySelector('.hero__video');
+    if (!heroVideo) return;
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    heroVideo.pause();
+    heroVideo.removeAttribute('autoplay');
+    Array.prototype.forEach.call(heroVideo.querySelectorAll('source'), function (s) {
+      s.remove();
+    });
+    heroVideo.load();   /* sem o load() o navegador mantem a fonte anterior */
+  })();
+
   /* ---- Header auto-medido: altura real + colapso apenas quando nao cabe ---- */
   var siteHeader = document.querySelector('.site-header');
   if (siteHeader) {
@@ -36,6 +52,12 @@
 
   /* ---- Scrollbar personalizada (discreta, some fora do header) ---- */
   (function () {
+    /* Só em aparelhos com mouse. Em telas de toque o próprio celular desenha a
+       barra dele e não há como escondê-la de forma confiável (o iOS ignora o
+       CSS), então a nossa apareceria em cima da dele, duplicada. Sem montar,
+       economiza também o listener de rolagem e o requestAnimationFrame. */
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
     var track = document.createElement('div');
     track.className = 'custom-scrollbar-track';
     var thumb = document.createElement('div');
@@ -195,21 +217,69 @@
   }
 
   /* ---- FAQ / accordion ---- */
-  document.querySelectorAll('.faq-item__question').forEach(function (btn) {
+  var faqButtons = document.querySelectorAll('.faq-item__question');
+
+  function faqClose(btn) {
+    btn.setAttribute('aria-expanded', 'false');
+    var answer = document.getElementById(btn.getAttribute('aria-controls'));
+    if (answer) answer.setAttribute('data-open', 'false');
+  }
+
+  function faqOpen(btn) {
+    faqButtons.forEach(function (other) {
+      if (other !== btn) faqClose(other);
+    });
+    btn.setAttribute('aria-expanded', 'true');
+    var answer = document.getElementById(btn.getAttribute('aria-controls'));
+    if (answer) answer.setAttribute('data-open', 'true');
+  }
+
+  faqButtons.forEach(function (btn) {
     btn.addEventListener('click', function () {
-      var expanded = btn.getAttribute('aria-expanded') === 'true';
-      var answer = document.getElementById(btn.getAttribute('aria-controls'));
+      if (btn.getAttribute('aria-expanded') === 'true') faqClose(btn);
+      else faqOpen(btn);
+    });
+  });
 
-      document.querySelectorAll('.faq-item__question').forEach(function (other) {
-        if (other !== btn) {
-          other.setAttribute('aria-expanded', 'false');
-          var otherAnswer = document.getElementById(other.getAttribute('aria-controls'));
-          if (otherAnswer) otherAnswer.setAttribute('data-open', 'false');
-        }
+  /* Abre ao passar o cursor — só em aparelhos com mouse.
+     No celular e no tablet continua valendo só o toque. */
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    var faqHoverTimer = null;
+    var faqUltimoMouseMove = 0;
+
+    document.addEventListener('mousemove', function () {
+      faqUltimoMouseMove = Date.now();
+    }, { passive: true });
+
+    /* Rolar a página não pode abrir nada */
+    window.addEventListener('scroll', function () {
+      clearTimeout(faqHoverTimer);
+    }, { passive: true });
+
+    document.querySelectorAll('.faq-item').forEach(function (item) {
+      var btn = item.querySelector('.faq-item__question');
+      if (!btn) return;
+      /* O gatilho é o item inteiro (pergunta + resposta), e não só a pergunta:
+         assim o visitante desce o cursor para ler a resposta sem que ela feche. */
+      item.addEventListener('mouseenter', function () {
+        /* Só abre se o cursor realmente se moveu até aqui. Sem esta checagem,
+           a página rolando por baixo de um cursor parado abriria o item errado,
+           roubando o que a pessoa tinha escolhido no clique ou no teclado. */
+        if (Date.now() - faqUltimoMouseMove > 100) return;
+        clearTimeout(faqHoverTimer);
+        faqHoverTimer = setTimeout(function () { faqOpen(btn); }, 180);
       });
+      item.addEventListener('mouseleave', function () {
+        clearTimeout(faqHoverTimer);
+      });
+    });
+  }
 
-      btn.setAttribute('aria-expanded', String(!expanded));
-      if (answer) answer.setAttribute('data-open', String(!expanded));
+  /* Esc fecha a resposta aberta, sem precisar mover o cursor */
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== 'Escape') return;
+    faqButtons.forEach(function (btn) {
+      if (btn.getAttribute('aria-expanded') === 'true') faqClose(btn);
     });
   });
 
@@ -367,6 +437,9 @@
     var autoTimer = null;
     var autoStopped = reduceMotion;
     var paused = false;
+    /* Fora da tela o carrossel fica morto: não gira, não gasta processamento.
+       O slide atual é preservado, então ao voltar ele está como o visitante deixou. */
+    var naTela = false;
 
     function goTo(i) {
       current = (i + slides.length) % slides.length;
@@ -394,7 +467,10 @@
     }
 
     function maybeStartAuto() {
-      if (autoStopped || paused || autoTimer) return;
+      /* naTela e document.hidden entram aqui porque TODO caminho que religa o
+         autoplay (tirar o mouse, sair do foco, voltar de outra aba) passa por
+         esta função. Sem a checagem, um carrossel fora da tela voltava a girar. */
+      if (autoStopped || paused || autoTimer || !naTela || document.hidden) return;
       autoTimer = setInterval(function () { goTo(current + 1); }, AUTOPLAY_MS);
       if (statusEl) statusEl.setAttribute('aria-live', 'off');
     }
@@ -453,12 +529,18 @@
     if ('IntersectionObserver' in window) {
       var carouselObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-          if (entry.isIntersecting) maybeStartAuto();
-          else clearAuto();
+          /* Basta um pedaço visível para o carrossel viver; sumiu por completo,
+             morre. Usar a proporção (ex.: 30%) quebraria em telas pequenas, onde
+             um carrossel mais alto que a janela nunca alcança a proporção pedida
+             e por isso jamais giraria. */
+          naTela = entry.isIntersecting;
+          if (naTela) maybeStartAuto();
+          else clearAuto();   /* morre aqui; o slide atual continua guardado */
         });
-      }, { threshold: 0.3 });
+      }, { threshold: 0 });
       carouselObserver.observe(carousel);
     } else {
+      naTela = true;
       maybeStartAuto();
     }
 
