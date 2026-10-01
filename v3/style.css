@@ -464,6 +464,21 @@ address { font-style: normal; }
     rgba(246, 240, 220, 0.80) 0%,
     rgba(237, 228, 200, 0.92) 100%);
 }
+/* Enquanto o vídeo não começa a tocar (ou se o iOS bloquear o autoplay), ele e
+   o véu ficam invisíveis: aparece só o fundo do .hero, sem quadro congelado. */
+.hero__video,
+.hero__overlay { transition: opacity 0.8s ease; }
+.hero--video-wait .hero__video,
+.hero--video-wait .hero__overlay { opacity: 0; }
+/* O vídeo é enfeite: nada de botão de play nem controles nativos do Safari */
+.hero__video::-webkit-media-controls,
+.hero__video::-webkit-media-controls-panel,
+.hero__video::-webkit-media-controls-overlay-play-button,
+.hero__video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
+  opacity: 0 !important;
+}
 /* Quem pediu menos movimento no sistema não vê o vídeo; sobra o fundo do .hero,
    idêntico ao site sem vídeo. O véu sai junto, senão escureceria esse fundo. */
 @media (prefers-reduced-motion: reduce) {

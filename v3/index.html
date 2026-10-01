@@ -159,8 +159,12 @@
          exatamente o site sem vídeo. muted é obrigatório para o autoplay não ser
          bloqueado; playsinline evita o iOS abrir em tela cheia; aria-hidden e
          tabindex="-1" mantêm o enfeite fora do leitor de tela e do teclado. -->
+    <!-- Celular em pé recebe um recorte vertical (540x960, 1,8 MB): é só a
+         faixa central que o object-fit: cover mostraria de qualquer jeito,
+         com menos da metade dos pixels para decodificar e baixar. -->
     <video class="hero__video" autoplay muted loop playsinline
            preload="metadata" aria-hidden="true" tabindex="-1">
+      <source src="assets/video/hero-mobile.mp4" type="video/mp4" media="(max-width: 768px) and (orientation: portrait)">
       <source src="assets/video/hero.mp4" type="video/mp4">
     </video>
     <div class="hero__overlay" aria-hidden="true"></div>
@@ -180,12 +184,8 @@
   </section>
 
   <!-- VÍDEO INSTITUCIONAL -->
-  <section class="section video-showcase" aria-labelledby="video-titulo">
+  <section class="section video-showcase" aria-label="Vídeo institucional">
     <div class="container">
-      <div class="section__header">
-        <span class="section__eyebrow">Vídeo institucional</span>
-        <h2 id="video-titulo" class="section__title">Conheça a Unique Garden Malls</h2>
-      </div>
       <!-- A capa é um botão: o vídeo só é baixado quando a pessoa pede para
            assistir, então a seção não pesa no carregamento da página. -->
       <button class="video-card anim-fade-up" type="button" data-video-open="video-institucional" aria-haspopup="dialog">
@@ -205,7 +205,7 @@
       <div class="video-intro">
         <div class="video-intro__heading anim-fade-up">
           <p class="video-intro__eyebrow">Unique Garden Arujá Mall</p>
-          <h3 class="video-intro__title">Uma nova experiência para Arujá</h3>
+          <h2 class="video-intro__title">Uma nova experiência para Arujá</h2>
         </div>
         <p class="video-intro__text anim-fade-up">Um projeto pensado para transformar a forma de viver, conviver e consumir. Arquitetura contemporânea, gastronomia, entretenimento, serviços e grandes marcas integrados em um ambiente aberto, moderno e conectado à cidade.</p>
       </div>

@@ -21,6 +21,40 @@
     heroVideo.load();   /* sem o load() o navegador mantem a fonte anterior */
   })();
 
+  /* ---- Video do hero so aparece quando esta tocando de verdade ---- */
+  /* No iPhone o autoplay pode ser bloqueado (Modo de Pouca Energia, economia
+     de dados). Ai o Safari mostrava o primeiro quadro parado com o botao de
+     play dele por cima. Agora o video e o veu ficam invisiveis ate o evento
+     'playing'; se nunca tocar, sobra o fundo do .hero, que e o site sem video.
+     O primeiro toque na tela tenta de novo, porque com gesto o iOS libera. */
+  (function () {
+    var heroVideo = document.querySelector('.hero__video');
+    var hero = document.querySelector('.hero');
+    if (!heroVideo || !hero) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    function shown() {
+      hero.classList.remove('hero--video-wait');
+    }
+    function tryPlay() {
+      var p = heroVideo.play();
+      if (p && p.catch) p.catch(function () {});
+    }
+
+    if (!heroVideo.paused && heroVideo.readyState >= 3) return;   /* ja esta tocando */
+    hero.classList.add('hero--video-wait');
+    heroVideo.addEventListener('playing', shown, { once: true });
+    tryPlay();
+
+    function onFirstGesture() {
+      document.removeEventListener('touchend', onFirstGesture);
+      document.removeEventListener('click', onFirstGesture);
+      if (heroVideo.paused) tryPlay();
+    }
+    document.addEventListener('touchend', onFirstGesture, { passive: true });
+    document.addEventListener('click', onFirstGesture);
+  })();
+
   /* ---- Header auto-medido: altura real + colapso apenas quando nao cabe ---- */
   var siteHeader = document.querySelector('.site-header');
   if (siteHeader) {
