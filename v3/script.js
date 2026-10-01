@@ -582,6 +582,31 @@
   }
   document.querySelectorAll('[data-carousel]').forEach(initCarousel);
 
+  /* ---- Card inteiro leva à página do empreendimento ---- */
+  /* O ícone do canto é o link de verdade (teclado e leitor de tela). O clique
+     no resto do card faz o mesmo, menos quando foi um arraste do carrossel,
+     uma seleção de texto ou um clique em outro link/botão do card. */
+  (function () {
+    var cards = document.querySelectorAll('[data-venture-href]');
+    if (!cards.length) return;
+    var startX = 0;
+    var startY = 0;
+    document.addEventListener('pointerdown', function (e) {
+      startX = e.clientX;
+      startY = e.clientY;
+    }, true);
+    cards.forEach(function (card) {
+      card.addEventListener('click', function (e) {
+        if (e.target.closest('a, button')) return;
+        if (Math.abs(e.clientX - startX) > 8 || Math.abs(e.clientY - startY) > 8) return;
+        if (window.getSelection && String(window.getSelection())) return;
+        var href = card.getAttribute('data-venture-href');
+        if (e.ctrlKey || e.metaKey) window.open(href, '_blank', 'noopener');
+        else window.location.href = href;
+      });
+    });
+  })();
+
   /* ---- Localização dos empreendimentos: janela suspensa com o mapa ---- */
   /* O clique no endereço já leva ao Google Maps (é um link comum). Em aparelhos
      com mouse, passar o cursor mostra uma prévia do mapa no estilo do site.
