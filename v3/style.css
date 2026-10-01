@@ -1672,6 +1672,42 @@ address { font-style: normal; }
   .video-card__label { font-size: var(--font-xs); }
 }
 
+/* ---- Texto abaixo do vídeo: título à esquerda, descrição à direita ---- */
+.video-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: center;
+  gap: var(--space-12);
+  margin-top: var(--space-16);
+}
+.video-intro__eyebrow {
+  font-size: var(--font-sm);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-3);
+}
+.video-intro__title {
+  font-size: var(--font-3xl);
+}
+/* Fio dourado separando as duas colunas, como divisória editorial */
+.video-intro__text {
+  font-size: var(--font-md);
+  line-height: var(--leading-relaxed);
+  padding-left: var(--space-12);
+  border-left: 2px solid var(--color-accent);
+}
+@media (max-width: 900px) {
+  .video-intro {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-10);
+  }
+  .video-intro__title { font-size: var(--font-2xl); }
+  .video-intro__text { padding-left: var(--space-5); }
+}
+
 /* ---- Janela do vídeo ---- */
 /* <dialog> aberto com showModal(): fica na camada superior, acima do header, e
    já prende o foco do teclado dentro dele. */
