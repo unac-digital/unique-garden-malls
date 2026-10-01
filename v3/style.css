@@ -318,27 +318,28 @@ address { font-style: normal; }
   text-transform: uppercase;
   font-weight: var(--font-semibold);
 }
-/* "Open Malls • Lifestyle • Ecossistemas Integrados" é bem mais largo que o
-   nome. Em uma linha só ficaria desproporcional, então vai em duas, e cada
-   linha distribui as palavras até a largura exata de "Unique Garden". */
-.brand__name .brand__tagline {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  margin-top: 4px;
-  font-size: 0.6rem;
-  letter-spacing: 0.06em;
-  line-height: 1.15;
-  white-space: nowrap;
-}
-.brand__tagline > span {
+/* Marca em duas linhas: logo + nome em cima; embaixo, a frase
+   "Open Malls • Lifestyle • Ecossistemas Integrados" vai do início do logo
+   até o fim de "Garden". Grid (e não flex com quebra) porque assim a largura
+   da marca é a da primeira linha, e a frase se ajusta a ela. */
+.brand.brand { display: grid; grid-template-columns: auto auto; justify-content: start; row-gap: 6px; }
+.brand__tagline {
+  grid-column: 1 / -1;
   display: flex;
   justify-content: space-between;
-  column-gap: 0.35em;   /* nunca deixa as palavras grudarem */
+  column-gap: 0.4em;   /* nunca deixa as palavras grudarem */
+  font-family: var(--font-body);
+  font-size: 0.56rem;
+  font-weight: var(--font-semibold);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-accent);
 }
-/* Header compacto (telas estreitas): o nome encolhe, a frase acompanha */
-.site-header--mini .brand__name .brand__tagline { font-size: 0.42rem; letter-spacing: 0.02em; margin-top: 3px; }
-.site-header--mini2 .brand__name .brand__tagline { font-size: 0.36rem; letter-spacing: 0.01em; }
+/* Header compacto (telas estreitas): logo e nome encolhem, a frase acompanha */
+.site-header--mini .brand__tagline { font-size: 0.42rem; letter-spacing: 0.03em; }
+.site-header--mini2 .brand__tagline { font-size: 0.36rem; letter-spacing: 0.02em; }
 
 .main-nav__list {
   display: flex;
@@ -421,7 +422,7 @@ address { font-style: normal; }
 .site-header--collapsed:not(.site-header--tight) .main-nav .header-actions--mobile { display: none; }
 /* Passos de emergencia so quando fisicamente nao cabe */
 .site-header--tight .header-actions .btn-primary { display: none; }
-.site-header--mini .brand { gap: var(--space-2); }
+.site-header--mini .brand { column-gap: var(--space-2); }
 .site-header--mini .brand__mark { height: 42px; }
 .site-header--mini .brand__name { font-size: 0.9rem; }
 .site-header--mini .brand__name > span:first-child { letter-spacing: 0.07em !important; }
@@ -1150,7 +1151,8 @@ address { font-style: normal; }
 .footer-grid > nav[aria-label="Links do rodapé"] { margin-left: var(--space-8); }
 .footer-brand p { font-size: var(--font-sm); margin-top: var(--space-4); max-width: 320px; }
 /* Marca do rodapé sempre empilhada: a coluna 1.4fr nunca comporta o lockup horizontal */
-.site-footer .brand { flex-direction: column; align-items: flex-start !important; gap: var(--space-3); }
+/* Rodapé usa a mesma montagem da marca do header */
+.site-footer .brand { column-gap: var(--space-3); }
 .footer-heading {
   font-size: var(--font-sm);
   text-transform: uppercase;
