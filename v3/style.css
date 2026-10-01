@@ -286,8 +286,8 @@ address { font-style: normal; }
   align-items: center;
   justify-content: flex-start;
   gap: var(--space-6);
-  padding-top: var(--space-3);
-  padding-bottom: var(--space-3);
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
 }
 .site-header__inner > .header-actions {
   margin-left: auto;
@@ -302,6 +302,9 @@ address { font-style: normal; }
   height: 52px;
   width: auto;
 }
+/* No header a marca tem duas linhas; com o logo em 42px o header fica
+   mais baixo que antes da frase existir. O rodapé mantém os 52px. */
+.site-header .brand__mark { height: 42px; }
 .brand__name {
   font-family: var(--font-display);
   font-size: var(--font-md);
@@ -337,6 +340,8 @@ address { font-style: normal; }
   white-space: nowrap;
   color: var(--color-accent);
 }
+.site-header .brand.brand { row-gap: 4px; }
+.site-header .brand__tagline { font-size: 0.5rem; }
 /* Header compacto (telas estreitas): logo e nome encolhem, a frase acompanha */
 .site-header--mini .brand__tagline { font-size: 0.42rem; letter-spacing: 0.03em; }
 .site-header--mini2 .brand__tagline { font-size: 0.36rem; letter-spacing: 0.02em; }
