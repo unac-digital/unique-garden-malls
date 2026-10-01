@@ -302,6 +302,9 @@ address { font-style: normal; }
   height: 52px;
   width: auto;
 }
+/* No header a marca tem duas linhas; com o logo em 42px o header fica
+   mais baixo que antes da frase existir. O rodapé mantém os 52px. */
+.site-header .brand__mark { height: 42px; }
 .brand__name {
   font-family: var(--font-display);
   font-size: var(--font-md);
@@ -318,7 +321,7 @@ address { font-style: normal; }
   text-transform: uppercase;
   font-weight: var(--font-semibold);
 }
-/* Marca do rodapé em duas linhas (o header mostra só o logo): logo + nome em cima; embaixo, a frase
+/* Marca em duas linhas: logo + nome em cima; embaixo, a frase
    "Open Malls • Lifestyle • Ecossistemas Integrados" vai do início do logo
    até o fim de "Garden". Grid (e não flex com quebra) porque assim a largura
    da marca é a da primeira linha, e a frase se ajusta a ela. */
@@ -337,6 +340,11 @@ address { font-style: normal; }
   white-space: nowrap;
   color: var(--color-accent);
 }
+.site-header .brand.brand { row-gap: 4px; }
+.site-header .brand__tagline { font-size: 0.5rem; }
+/* Header compacto (telas estreitas): logo e nome encolhem, a frase acompanha */
+.site-header--mini .brand__tagline { font-size: 0.42rem; letter-spacing: 0.03em; }
+.site-header--mini2 .brand__tagline { font-size: 0.36rem; letter-spacing: 0.02em; }
 
 .main-nav__list {
   display: flex;
