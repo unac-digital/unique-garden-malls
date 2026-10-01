@@ -583,6 +583,8 @@ address { font-style: normal; }
 .hero__eyebrow  { animation: heroFadeUp 0.6s ease forwards; }
 .hero__title    { animation: heroFadeUp 0.7s ease 0.1s backwards; }
 .hero__subtitle { animation: heroFadeUp 0.7s ease 0.2s backwards; }
+/* Subtítulo em dois parágrafos: o primeiro fica colado no segundo */
+.hero__subtitle.hero__subtitle--intro { margin-bottom: var(--space-4); }
 .hero__cta      { animation: heroFadeUp 0.7s ease 0.32s backwards; }
 
 /* ---- Animações ao rolar ---- */
