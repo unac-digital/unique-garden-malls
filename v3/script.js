@@ -132,6 +132,59 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', updateThumb);
     updateThumb();
+
+    /* Arrastar a barra e clicar no trilho, como na barra do sistema (que está
+       escondida). behavior 'instant' porque o html tem scroll-behavior: smooth,
+       que faria a página "correr atrás" do cursor durante o arraste. */
+    var dragging = false;
+    var dragStartY = 0;
+    var dragStartScroll = 0;
+    function scrollMetrics() {
+      var doc = document.documentElement;
+      return {
+        scrollable: doc.scrollHeight - window.innerHeight,
+        maxThumbTop: track.clientHeight - thumb.offsetHeight
+      };
+    }
+    function startDrag(e) {
+      dragging = true;
+      dragStartY = e.clientY;
+      dragStartScroll = window.scrollY || document.documentElement.scrollTop;
+      track.setPointerCapture(e.pointerId);
+      track.classList.add('is-dragging');
+      document.documentElement.classList.add('is-scrollbar-dragging');
+      clearTimeout(hideTimer);
+    }
+    track.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      if (e.target !== thumb) {
+        /* Clique no trilho: centraliza a barra no ponto clicado e já começa o arraste */
+        var m = scrollMetrics();
+        if (m.maxThumbTop <= 0) return;
+        var rect = track.getBoundingClientRect();
+        var top = Math.min(Math.max(e.clientY - rect.top - thumb.offsetHeight / 2, 0), m.maxThumbTop);
+        window.scrollTo({ top: top / m.maxThumbTop * m.scrollable, behavior: 'instant' });
+      }
+      startDrag(e);
+    });
+    track.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      var m = scrollMetrics();
+      if (m.maxThumbTop <= 0) return;
+      var y = dragStartScroll + (e.clientY - dragStartY) * m.scrollable / m.maxThumbTop;
+      window.scrollTo({ top: y, behavior: 'instant' });
+    });
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false;
+      track.classList.remove('is-dragging');
+      document.documentElement.classList.remove('is-scrollbar-dragging');
+      updateThumb();
+    }
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+    track.addEventListener('lostpointercapture', endDrag);
   })();
 
   /* ---- Luzes de fundo do hero: flutuação suave + paralaxe no scroll ---- */

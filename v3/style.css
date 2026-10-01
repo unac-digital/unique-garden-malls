@@ -1782,26 +1782,35 @@ address { font-style: normal; }
   html { scrollbar-width: none; -ms-overflow-style: none; }
   html::-webkit-scrollbar { display: none; }
 }
+/* O trilho é uma faixa de 14px na borda direita que recebe o mouse: dá para
+   arrastar a barra e clicar no trilho, como na barra do sistema. A barra
+   visível continua fina e só engrossa quando o cursor chega nela. */
 .custom-scrollbar-track {
   position: fixed;
   top: var(--header-h);
-  right: 3px;
+  right: 0;
   bottom: 0;
-  width: 6px;
+  width: 14px;
   z-index: 600;
-  pointer-events: none;
 }
 .custom-scrollbar-thumb {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
+  right: 3px;
+  width: 6px;
   border-radius: var(--radius-full);
   background: rgba(228, 206, 126, 0.45);
   opacity: 0;
-  transition: opacity 0.4s ease, transform 0.12s linear;
+  cursor: grab;
+  transition: opacity 0.4s ease, transform 0.12s linear, width 0.15s ease, background 0.15s ease;
 }
-.custom-scrollbar-track.is-visible .custom-scrollbar-thumb { opacity: 1; }
+.custom-scrollbar-track.is-visible .custom-scrollbar-thumb,
+.custom-scrollbar-track:hover .custom-scrollbar-thumb { opacity: 1; }
+.custom-scrollbar-track:hover .custom-scrollbar-thumb,
+.custom-scrollbar-track.is-dragging .custom-scrollbar-thumb { width: 9px; background: rgba(228, 206, 126, 0.7); }
+/* Arrastando: a barra acompanha o cursor sem atraso e nada é selecionado */
+.custom-scrollbar-track.is-dragging .custom-scrollbar-thumb { opacity: 1; cursor: grabbing; transition: width 0.15s ease, background 0.15s ease; }
+.is-scrollbar-dragging, .is-scrollbar-dragging * { user-select: none; -webkit-user-select: none; cursor: grabbing !important; }
 
 
 /* ==========================================================================
