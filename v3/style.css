@@ -1308,6 +1308,144 @@ address { font-style: normal; }
 }
 .carousel__cta { margin-top: var(--space-3); }
 
+/* ---- Dados do empreendimento nos cards: data, localização e lojas ---- */
+.carousel__tagline {
+  font-family: var(--font-display);
+  font-size: var(--font-md);
+  font-weight: var(--font-medium);
+  line-height: var(--leading-snug);
+  color: var(--color-text);
+}
+.venture-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+}
+.venture-meta__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--font-sm);
+  line-height: var(--leading-snug);
+  color: var(--color-muted);
+}
+.venture-meta__item--date {
+  color: var(--color-accent);
+  font-weight: var(--font-semibold);
+}
+.venture-meta__icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+/* Localização: link discreto para o Google Maps */
+.venture-loc {
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: color 0.2s ease;
+}
+.venture-loc > span {
+  text-decoration: underline;
+  text-decoration-color: rgba(228, 206, 126, 0.35);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease;
+}
+.venture-loc:hover { color: var(--color-accent); }
+.venture-loc:hover > span { text-decoration-color: currentColor; }
+.venture-loc .venture-meta__icon { color: var(--color-accent); }
+.venture-meta__label {
+  margin-top: var(--space-1);
+  font-size: var(--font-xs);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+.carousel__partners li.is-pending,
+.timeline-item__partners li.is-pending {
+  background: transparent;
+  border: 1px dashed rgba(244, 239, 221, 0.3);
+  font-style: italic;
+}
+.timeline-item__tagline {
+  margin-top: var(--space-2);
+  color: var(--color-text);
+}
+.timeline-item__location {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  font-size: var(--font-sm);
+  color: var(--color-muted);
+}
+
+/* ---- Janela suspensa do mapa (aparece ao passar o mouse na localização) ---- */
+/* Fica no <body>, fora dos cards: o carrossel tem overflow: hidden e
+   cortaria uma janela posicionada dentro dele. */
+.maps-pop {
+  position: fixed;
+  z-index: 800;
+  width: 300px;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-alt);
+  box-shadow: var(--shadow-lift);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.maps-pop.is-open { opacity: 1; transform: translateY(0); }
+.maps-pop__map {
+  display: block;
+  width: 100%;
+  height: 150px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+.maps-pop__address {
+  margin-top: var(--space-3);
+  font-size: var(--font-sm);
+  line-height: var(--leading-snug);
+  color: var(--color-text);
+}
+.maps-pop__hint {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+  font-size: var(--font-xs);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+.maps-pop__hint svg { width: 14px; height: 14px; }
+/* Setinha apontando para a localização */
+.maps-pop::after {
+  content: '';
+  position: absolute;
+  left: var(--arrow-x, 50%);
+  width: 12px;
+  height: 12px;
+  background: inherit;
+  border: inherit;
+  border-top: 0;
+  border-left: 0;
+  transform: translateX(-50%) rotate(45deg);
+  bottom: -7px;
+}
+.maps-pop--below::after {
+  bottom: auto;
+  top: -7px;
+  transform: translateX(-50%) rotate(225deg);
+}
+
 .carousel__controls {
   display: flex;
   align-items: center;
@@ -2146,6 +2284,10 @@ address { font-style: normal; }
 [data-theme="light"] .carousel__partners li,
 [data-theme="light"] .property-card__partners li,
 [data-theme="light"] .timeline-item__partners li { background: rgba(23, 40, 27, 0.07); }
+[data-theme="light"] .carousel__partners li.is-pending,
+[data-theme="light"] .timeline-item__partners li.is-pending { background: transparent; border-color: rgba(23, 40, 27, 0.3); }
+[data-theme="light"] .venture-loc > span { text-decoration-color: rgba(46, 74, 56, 0.35); }
+[data-theme="light"] .venture-loc:hover > span { text-decoration-color: currentColor; }
 [data-theme="light"] .timeline::before { background: linear-gradient(180deg, var(--color-accent), rgba(46, 74, 56, 0.1)); }
 [data-theme="light"] .custom-scrollbar-thumb { background: rgba(46, 74, 56, 0.45); }
 [data-theme="light"] .ambient-lights__orb--1 { background: radial-gradient(circle, rgba(201, 168, 76, 0.16) 0%, rgba(201, 168, 76, 0) 68%); }

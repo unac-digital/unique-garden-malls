@@ -582,6 +582,76 @@
   }
   document.querySelectorAll('[data-carousel]').forEach(initCarousel);
 
+  /* ---- Localização dos empreendimentos: janela suspensa com o mapa ---- */
+  /* O clique no endereço já leva ao Google Maps (é um link comum). Em aparelhos
+     com mouse, passar o cursor mostra uma prévia do mapa no estilo do site.
+     A prévia (iframe do Maps) só é criada quando a pessoa passa o mouse, então
+     não pesa no carregamento da página. Uma única janela serve todos os cards. */
+  (function () {
+    var links = document.querySelectorAll('.venture-loc[data-maps]');
+    if (!links.length) return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    var pop = document.createElement('div');
+    pop.className = 'maps-pop';
+    pop.setAttribute('aria-hidden', 'true');
+    pop.innerHTML =
+      '<iframe class="maps-pop__map" title="Prévia do mapa" loading="lazy" tabindex="-1" referrerpolicy="no-referrer-when-downgrade"></iframe>' +
+      '<p class="maps-pop__address"></p>' +
+      '<p class="maps-pop__hint">Clique para abrir no Google Maps ' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></p>';
+    document.body.appendChild(pop);
+    var frame = pop.querySelector('.maps-pop__map');
+    var address = pop.querySelector('.maps-pop__address');
+    var current = null;
+    var hideTimer = null;
+
+    function place(link) {
+      var r = link.getBoundingClientRect();
+      var w = pop.offsetWidth;
+      var h = pop.offsetHeight;
+      var gap = 12;
+      var left = Math.min(Math.max(r.left + r.width / 2 - w / 2, 12), window.innerWidth - w - 12);
+      var below = r.top - h - gap < 12;
+      pop.classList.toggle('maps-pop--below', below);
+      pop.style.left = left + 'px';
+      pop.style.top = (below ? r.bottom + gap : r.top - h - gap) + 'px';
+      pop.style.setProperty('--arrow-x', Math.min(Math.max(r.left + r.width / 2 - left, 18), w - 18) + 'px');
+    }
+
+    function show(link) {
+      clearTimeout(hideTimer);
+      if (current !== link) {
+        current = link;
+        var q = link.getAttribute('data-maps');
+        var src = 'https://maps.google.com/maps?q=' + encodeURIComponent(q) + '&z=15&output=embed';
+        if (frame.getAttribute('src') !== src) frame.setAttribute('src', src);
+        address.textContent = link.textContent.replace('Localização: ', '').replace(' (abre o Google Maps em nova aba)', '');
+      }
+      place(link);
+      pop.classList.add('is-open');
+    }
+
+    function hide() {
+      hideTimer = setTimeout(function () {
+        pop.classList.remove('is-open');
+        current = null;
+      }, 120);
+    }
+
+    links.forEach(function (link) {
+      link.addEventListener('mouseenter', function () { show(link); });
+      link.addEventListener('mouseleave', hide);
+      link.addEventListener('focus', function () { show(link); });
+      link.addEventListener('blur', hide);
+    });
+    window.addEventListener('scroll', function () { if (current) place(current); }, { passive: true });
+    window.addEventListener('resize', function () { if (current) place(current); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { pop.classList.remove('is-open'); current = null; }
+    });
+  })();
+
   /* ---- Vídeo institucional: player próprio (qualidade, velocidade, tela cheia) ---- */
   function formatTime(s) {
     if (!isFinite(s) || s < 0) s = 0;
