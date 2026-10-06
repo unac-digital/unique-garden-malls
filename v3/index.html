@@ -171,7 +171,7 @@
     <div class="hero__overlay" aria-hidden="true"></div>
     <span class="hero__decor hero__decor--one" aria-hidden="true"></span>
     <span class="hero__decor hero__decor--two" aria-hidden="true"></span>
-    <div class="container hero__inner">
+    <div class="container hero__inner hero__inner--split">
       <div class="hero__content">
         <p class="hero__eyebrow">Desde 2008 · Interior e Grande São Paulo</p>
         <h1 class="hero__title" style="font-weight: 700; line-height: 1.05">Ecossistemas que conectam marcas, experiências e novas formas de viver</h1>
@@ -181,32 +181,33 @@
           <a class="btn-secondary" href="contato.html">Sou lojista, quero uma parceria</a>
         </div>
       </div>
+      <div class="hero__video-card">
+        <!-- A capa é um botão: o vídeo só é baixado quando a pessoa pede para
+             assistir, então a seção não pesa no carregamento da página. -->
+        <button class="video-card" type="button" data-video-open="video-institucional" aria-haspopup="dialog">
+          <picture class="video-card__image">
+            <source srcset="assets/img/video/corpo-capa.webp" type="image/webp">
+            <img src="assets/img/video/corpo-capa.jpg" alt="" width="1600" height="900" decoding="async">
+          </picture>
+          <span class="video-card__play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l11.03-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z"/></svg>
+          </span>
+          <span class="video-card__caption">
+            <span class="video-card__label">Assistir ao vídeo</span>
+            <span class="video-card__duration">1:21</span>
+          </span>
+        </button>
+      </div>
     </div>
   </section>
 
-  <!-- VÍDEO INSTITUCIONAL -->
-  <section class="section video-showcase" aria-label="Vídeo institucional">
+  <!-- UNIQUE GARDEN ARUJÁ MALL -->
+  <section class="section video-showcase" aria-labelledby="aruja-titulo">
     <div class="container">
-      <!-- A capa é um botão: o vídeo só é baixado quando a pessoa pede para
-           assistir, então a seção não pesa no carregamento da página. -->
-      <button class="video-card anim-fade-up" type="button" data-video-open="video-institucional" aria-haspopup="dialog">
-        <picture class="video-card__image">
-          <source srcset="assets/img/video/corpo-capa.webp" type="image/webp">
-          <img src="assets/img/video/corpo-capa.jpg" alt="" width="1600" height="900" loading="lazy" decoding="async">
-        </picture>
-        <span class="video-card__play" aria-hidden="true">
-          <svg viewBox="0 0 24 24" focusable="false"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l11.03-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z"/></svg>
-        </span>
-        <span class="video-card__caption">
-          <span class="video-card__label">Assistir ao vídeo</span>
-          <span class="video-card__duration">1:21</span>
-        </span>
-      </button>
-
       <div class="video-intro">
         <div class="video-intro__heading anim-fade-up">
           <p class="video-intro__eyebrow">Unique Garden Arujá Mall</p>
-          <h2 class="video-intro__title">Uma nova experiência para Arujá</h2>
+          <h2 id="aruja-titulo" class="video-intro__title">Uma nova experiência para Arujá</h2>
         </div>
         <p class="video-intro__text anim-fade-up">Um projeto pensado para transformar a forma de viver, conviver e consumir. Arquitetura contemporânea, gastronomia, entretenimento, serviços e grandes marcas integrados em um ambiente aberto, moderno e conectado à cidade.</p>
       </div>
