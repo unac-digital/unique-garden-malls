@@ -1335,6 +1335,133 @@ address { font-style: normal; }
 }
 .carousel__cta { margin-top: var(--space-3); }
 
+/* ==========================================================================
+   Vitrine de empreendimentos: vários cards lado a lado, como em um
+   catálogo — imagem em cima; nome, frase, data, local e lojas embaixo.
+   4 por vez no computador largo, 3 no notebook, 2 no tablet, 1 no celular.
+   ========================================================================== */
+.vslider {
+  position: relative;
+  --per-view: 1;
+  --vs-gap: var(--space-6);
+}
+/* Folga em volta para a sombra dos cards não ser cortada pelo overflow */
+.vslider__viewport {
+  overflow: hidden;
+  margin: -6px -6px -14px;
+  padding: 6px 6px 14px;
+}
+.vslider__track {
+  display: flex;
+  gap: var(--vs-gap);
+  touch-action: pan-y;
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.vslider__item {
+  flex: 0 0 calc((100% - (var(--per-view) - 1) * var(--vs-gap)) / var(--per-view));
+  min-width: 0;
+}
+.vcard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.vcard__thumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+.vcard__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.vcard:hover .vcard__thumb img { transform: scale(1.06); }
+/* Empreendimento ainda sem foto: o logo no lugar, discreto */
+.vcard__thumb--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 40%, var(--color-surface-light), var(--color-surface) 70%);
+}
+.vcard__thumb--empty img { width: 46%; height: auto; object-fit: contain; opacity: 0.55; }
+.vcard:hover .vcard__thumb--empty img { transform: scale(1.04); }
+.vcard__badge {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: 1;
+}
+.vcard .venture-open { top: var(--space-3); right: var(--space-3); width: 40px; height: 40px; }
+.vcard__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding-top: var(--space-5);
+}
+.vcard__name {
+  font-family: var(--font-body);
+  font-size: var(--font-sm);
+  font-weight: var(--font-bold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  line-height: var(--leading-snug);
+  color: var(--color-accent);
+}
+.vcard__tagline {
+  font-family: var(--font-display);
+  font-size: var(--font-md);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-snug);
+  color: var(--color-heading);
+}
+.vcard__meta { margin-top: var(--space-1); }
+.vcard__stores {
+  margin-top: var(--space-1);
+  font-size: var(--font-sm);
+  line-height: var(--leading-snug);
+  color: var(--color-muted);
+}
+.vcard__stores-label {
+  display: block;
+  margin-bottom: 2px;
+  font-size: var(--font-xs);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+.vcard__stores .is-pending { font-style: italic; }
+/* Setas centralizadas na altura das imagens (o JS mede a imagem em --thumb-h) */
+.vslider__arrow {
+  position: absolute;
+  top: calc(var(--thumb-h, 220px) / 2);
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  transform: translateY(-50%);
+  box-shadow: var(--shadow-card);
+}
+.vslider__arrow:hover { transform: translateY(-50%) scale(1.06); }
+.vslider__arrow--prev { left: -22px; }
+.vslider__arrow--next { right: -22px; }
+.vslider__dots { justify-content: center; margin-top: var(--space-8); }
+/* Todos os cards cabem na tela: sem setas nem pontos */
+.vslider--static .vslider__arrow,
+.vslider--static .vslider__dots { display: none; }
+@media (max-width: 767px) {
+  /* Margem lateral do celular é estreita: setas por dentro, sobre a imagem */
+  .vslider__arrow--prev { left: var(--space-2); }
+  .vslider__arrow--next { right: var(--space-2); }
+  .vslider__dots { margin-top: var(--space-6); }
+}
+
 /* ---- Dados do empreendimento nos cards: data, localização e lojas ---- */
 .carousel__tagline {
   font-family: var(--font-display);

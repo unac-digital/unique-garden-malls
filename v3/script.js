@@ -635,6 +635,155 @@
   }
   document.querySelectorAll('[data-carousel]').forEach(initCarousel);
 
+  /* ---- Vitrine de empreendimentos (vários cards por vez) ---- */
+  /* Avança um card por vez e volta ao começo no fim. Cards fora da janela
+     ficam fora do teclado e do leitor de tela, como no carrossel de slides. */
+  function initVSlider(root) {
+    var viewport = root.querySelector('.vslider__viewport');
+    var track = root.querySelector('.vslider__track');
+    var items = Array.prototype.slice.call(track.children);
+    var prevBtn = root.querySelector('[data-vslider-prev]');
+    var nextBtn = root.querySelector('[data-vslider-next]');
+    var dotsBox = root.querySelector('[data-vslider-dots]');
+    if (!items.length) return;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var AUTOPLAY_MS = 5000;
+    var index = 0;
+    var perView = 1;
+    var maxIndex = 0;
+    var autoTimer = null;
+    var paused = false;
+    var naTela = false;
+    var dots = [];
+
+    /* Pela largura da própria vitrine (não da janela): 4 cards no
+       computador largo, 3 no notebook, 2 no tablet, 1 no celular */
+    function viewCount() {
+      var w = root.clientWidth;
+      if (w >= 1100) return 4;
+      if (w >= 820) return 3;
+      if (w >= 520) return 2;
+      return 1;
+    }
+
+    function step() {
+      var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      return items[0].getBoundingClientRect().width + gap;
+    }
+
+    function goTo(i) {
+      index = i < 0 ? maxIndex : (i > maxIndex ? 0 : i);
+      track.style.transform = 'translateX(' + (-index * step()) + 'px)';
+      dots.forEach(function (d, k) { d.setAttribute('aria-current', String(k === index)); });
+      items.forEach(function (item, k) {
+        var visible = k >= index && k < index + perView;
+        item.setAttribute('aria-hidden', String(!visible));
+        item.querySelectorAll('a, button').forEach(function (el) {
+          if (visible) el.removeAttribute('tabindex');
+          else el.setAttribute('tabindex', '-1');
+        });
+      });
+    }
+
+    function buildDots() {
+      dotsBox.innerHTML = '';
+      dots = [];
+      for (var i = 0; i <= maxIndex && maxIndex > 0; i++) {
+        var d = document.createElement('button');
+        d.type = 'button';
+        d.className = 'carousel__dot';
+        d.setAttribute('aria-label', 'Mostrar a partir do ' + (i + 1) + 'º empreendimento');
+        (function (k) { d.addEventListener('click', function () { interact(function () { goTo(k); }); }); })(i);
+        dotsBox.appendChild(d);
+        dots.push(d);
+      }
+    }
+
+    function layout() {
+      perView = Math.min(viewCount(), items.length);
+      root.style.setProperty('--per-view', perView);
+      maxIndex = Math.max(items.length - perView, 0);
+      root.classList.toggle('vslider--static', maxIndex === 0);
+      buildDots();
+      /* Reposiciona sem animação quando a largura muda */
+      track.style.transition = 'none';
+      goTo(Math.min(index, maxIndex));
+      void track.offsetWidth;
+      track.style.transition = '';
+      var thumb = items[0].querySelector('.vcard__thumb');
+      if (thumb) root.style.setProperty('--thumb-h', thumb.offsetHeight + 'px');
+      clearAuto();
+      maybeStartAuto();
+    }
+
+    function clearAuto() {
+      if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+    }
+    function maybeStartAuto() {
+      if (reduceMotion || paused || autoTimer || !naTela || document.hidden || maxIndex === 0) return;
+      autoTimer = setInterval(function () { goTo(index + 1); }, AUTOPLAY_MS);
+    }
+    function interact(fn) { clearAuto(); fn(); maybeStartAuto(); }
+
+    prevBtn.addEventListener('click', function () { interact(function () { goTo(index - 1); }); });
+    nextBtn.addEventListener('click', function () { interact(function () { goTo(index + 1); }); });
+
+    root.addEventListener('mouseenter', function () { paused = true; clearAuto(); });
+    root.addEventListener('mouseleave', function () { paused = false; maybeStartAuto(); });
+    root.addEventListener('focusin', function () { paused = true; clearAuto(); });
+    root.addEventListener('focusout', function (e) {
+      if (!root.contains(e.relatedTarget)) { paused = false; maybeStartAuto(); }
+    });
+    root.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') interact(function () { goTo(index - 1); });
+      else if (e.key === 'ArrowRight') interact(function () { goTo(index + 1); });
+    });
+
+    /* Arrastar com o dedo (ou mouse) troca de card */
+    var startX = null;
+    var startY = null;
+    viewport.addEventListener('pointerdown', function (e) { startX = e.clientX; startY = e.clientY; });
+    viewport.addEventListener('pointerup', function (e) {
+      if (startX === null) return;
+      var dx = e.clientX - startX;
+      var dy = e.clientY - startY;
+      startX = null;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        interact(function () { goTo(index + (dx < 0 ? 1 : -1)); });
+      }
+    });
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) clearAuto();
+      else maybeStartAuto();
+    });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          naTela = entry.isIntersecting;
+          if (naTela) maybeStartAuto();
+          else clearAuto();
+        });
+      }, { threshold: 0 }).observe(root);
+    } else {
+      naTela = true;
+    }
+
+    var resizeTimer = null;
+    var lastWidth = 0;
+    function onResize() {
+      if (root.clientWidth === lastWidth) return;
+      lastWidth = root.clientWidth;
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(layout, 80);
+    }
+    if ('ResizeObserver' in window) new ResizeObserver(onResize).observe(root);
+    else window.addEventListener('resize', onResize);
+    lastWidth = root.clientWidth;
+    layout();
+  }
+  document.querySelectorAll('[data-vslider]').forEach(initVSlider);
+
   /* ---- Card inteiro leva à página do empreendimento ---- */
   /* O ícone do canto é o link de verdade (teclado e leitor de tela). O clique
      no resto do card faz o mesmo, menos quando foi um arraste do carrossel,
