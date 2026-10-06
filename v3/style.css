@@ -1141,8 +1141,11 @@ address { font-style: normal; }
 /* ---- Contato direto ---- */
 .contact-info {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--space-6);
+}
+@media (max-width: 1100px) {
+  .contact-info { grid-template-columns: repeat(2, 1fr); }
 }
 .contact-info__item {
   background: var(--color-surface);
@@ -1153,10 +1156,6 @@ address { font-style: normal; }
 }
 .contact-info__item a { color: var(--color-accent); text-decoration: none; font-weight: var(--font-semibold); }
 .contact-info__item a:hover { text-decoration: underline; }
-/* Card do Instagram com dois perfis: cada @ com uma legenda de quem é */
-.contact-insta { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); }
-.contact-insta li { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.contact-insta__label { font-size: var(--font-xs); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--color-muted); }
 @media (max-width: 768px) {
   .contact-info { grid-template-columns: 1fr; }
 }
