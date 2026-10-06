@@ -984,6 +984,7 @@ address { font-style: normal; }
   }
 }
 .faq-item__icon {
+  position: relative;
   flex-shrink: 0;
   width: 28px;
   height: 28px;
@@ -994,8 +995,25 @@ address { font-style: normal; }
   align-items: center;
   justify-content: center;
   transition: transform 0.25s ease, background-color 0.2s ease, color 0.2s ease;
-  font-size: var(--font-md);
+  /* O "+" do HTML fica invisível: o caractere da fonte não cai no centro
+     exato do círculo. O sinal é desenhado com duas barras centralizadas
+     pela geometria do círculo, e o giro de 45° vira o "×" sem sair do lugar. */
+  font-size: 0;
+  line-height: 0;
 }
+.faq-item__icon::before,
+.faq-item__icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+}
+.faq-item__icon::after { transform: translate(-50%, -50%) rotate(90deg); }
 .faq-item__question[aria-expanded="true"] .faq-item__icon { transform: rotate(45deg); }
 .faq-item__answer {
   overflow: hidden;
