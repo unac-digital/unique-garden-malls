@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>try{if(localStorage.getItem('ugm-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
 <title>Unique Garden Malls | Open Malls desde 2008</title>
-<meta name="description" content="Desenvolvedora de Open Malls com 18 anos de atuação, 7 empreendimentos operacionais e pipeline ativo até 2028. Invista ou leve sua marca para rotas de alto fluxo.">
+<meta name="description" content="Desenvolvedora de Open Malls com 18 anos de atuação, 8 empreendimentos operacionais e pipeline ativo até 2028. Invista ou leve sua marca para rotas de alto fluxo.">
 <meta name="keywords" content="open mall, investimento imobiliário, centro comercial, Unique Garden Malls, cotas imobiliárias, expansão comercial São Paulo">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="Unique Garden Malls | Open Malls desde 2008">
-<meta property="og:description" content="18 anos de track record, 7 empreendimentos operacionais e um pipeline ativo de 5 novos projetos até 2028. Conheça a oportunidade de investir ou de ser parceiro lojista.">
+<meta property="og:description" content="18 anos de track record, 8 empreendimentos operacionais e um pipeline ativo de 4 novos projetos até 2028. Conheça a oportunidade de investir ou de ser parceiro lojista.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://uniquegardenmalls.com.br/">
 <meta property="og:image" content="https://uniquegardenmalls.com.br/assets/img/brand/logo_full.jpg">
@@ -55,7 +55,7 @@
   "name": "Unique Garden Malls | Open Malls desde 2008",
   "speakable": {
     "@type": "SpeakableSpecification",
-    "cssSelector": [".hero__subtitle", ".sobre-empresa"]
+    "cssSelector": [".hero__subtitle"]
   },
   "url": "https://uniquegardenmalls.com.br/"
 }
@@ -70,7 +70,7 @@
       "name": "O que são Open Malls?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Open Malls são centros comerciais a céu aberto que reúnem grandes marcas âncora, serviços e alimentação em rotas de alto fluxo. A Unique Garden Malls desenvolve esse formato desde 2008, com 7 empreendimentos operacionais e 62 operações monousuárias já inauguradas no interior e na grande São Paulo."
+        "text": "Open Malls são centros comerciais a céu aberto que reúnem grandes marcas âncora, serviços e alimentação em rotas de alto fluxo. A Unique Garden Malls desenvolve esse formato desde 2008, com 8 empreendimentos operacionais e 62 operações monousuárias já inauguradas no interior e na grande São Paulo."
       }
     },
     {
@@ -128,6 +128,7 @@
     <nav class="main-nav" id="menu-principal" aria-label="Navegação principal" data-open="false">
       <ul class="main-nav__list">
         <li><a href="index.html" aria-current="page">Início</a></li>
+        <li><a href="quem-somos.html">Quem somos</a></li>
         <li><a href="empreendimentos.html">Empreendimentos</a></li>
         <li><a href="investidores.html">Investidores</a></li>
         <li><a href="proprietarios.html">Proprietários</a></li>
@@ -155,12 +156,13 @@
 
   <!-- HERO -->
   <section class="hero">
-    <!-- Vídeo decorativo de fundo. Sem poster de propósito: se o navegador não
+    <!-- Vídeo decorativo de fundo: o vídeo institucional, mudo e em loop.
+         Sem poster de propósito: se o navegador não
          carregar ou bloquear o autoplay, o que aparece é o fundo do .hero,
          exatamente o site sem vídeo. muted é obrigatório para o autoplay não ser
          bloqueado; playsinline evita o iOS abrir em tela cheia; aria-hidden e
          tabindex="-1" mantêm o enfeite fora do leitor de tela e do teclado. -->
-    <!-- Celular em pé recebe um recorte vertical (540x960, 1,8 MB): é só a
+    <!-- Celular em pé recebe um recorte vertical (540x960, 3,5 MB): é só a
          faixa central que o object-fit: cover mostraria de qualquer jeito,
          com menos da metade dos pixels para decodificar e baixar. -->
     <video class="hero__video" autoplay muted loop playsinline
@@ -171,7 +173,7 @@
     <div class="hero__overlay" aria-hidden="true"></div>
     <span class="hero__decor hero__decor--one" aria-hidden="true"></span>
     <span class="hero__decor hero__decor--two" aria-hidden="true"></span>
-    <div class="container hero__inner hero__inner--split">
+    <div class="container hero__inner">
       <div class="hero__content">
         <p class="hero__eyebrow">Desde 2008 · Interior e Grande São Paulo</p>
         <h1 class="hero__title" style="font-weight: 700; line-height: 1.05">Ecossistemas que conectam marcas, experiências e novas formas de viver</h1>
@@ -181,33 +183,32 @@
           <a class="btn-secondary" href="contato.html">Sou lojista, quero uma parceria</a>
         </div>
       </div>
-      <div class="hero__video-card">
-        <!-- A capa é um botão: o vídeo só é baixado quando a pessoa pede para
-             assistir, então a seção não pesa no carregamento da página. -->
-        <button class="video-card" type="button" data-video-open="video-institucional" aria-haspopup="dialog">
-          <picture class="video-card__image">
-            <source srcset="assets/img/video/corpo-capa.webp" type="image/webp">
-            <img src="assets/img/video/corpo-capa.jpg" alt="" width="1600" height="900" decoding="async">
-          </picture>
-          <span class="video-card__play" aria-hidden="true">
-            <svg viewBox="0 0 24 24" focusable="false"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l11.03-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z"/></svg>
-          </span>
-          <span class="video-card__caption">
-            <span class="video-card__label">Assistir ao vídeo</span>
-            <span class="video-card__duration">1:21</span>
-          </span>
-        </button>
-      </div>
     </div>
   </section>
 
-  <!-- UNIQUE GARDEN ARUJÁ MALL -->
-  <section class="section video-showcase" aria-labelledby="aruja-titulo">
+  <!-- VÍDEO INSTITUCIONAL -->
+  <section class="section video-showcase" aria-label="Vídeo institucional">
     <div class="container">
+      <!-- A capa é um botão: o vídeo só é baixado quando a pessoa pede para
+           assistir, então a seção não pesa no carregamento da página. -->
+      <button class="video-card anim-fade-up" type="button" data-video-open="video-institucional" aria-haspopup="dialog">
+        <picture class="video-card__image">
+          <source srcset="assets/img/video/corpo-capa.webp" type="image/webp">
+          <img src="assets/img/video/corpo-capa.jpg" alt="" width="1600" height="900" loading="lazy" decoding="async">
+        </picture>
+        <span class="video-card__play" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l11.03-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z"/></svg>
+        </span>
+        <span class="video-card__caption">
+          <span class="video-card__label">Assistir ao vídeo</span>
+          <span class="video-card__duration">1:21</span>
+        </span>
+      </button>
+
       <div class="video-intro">
         <div class="video-intro__heading anim-fade-up">
           <p class="video-intro__eyebrow">Unique Garden Arujá Mall</p>
-          <h2 id="aruja-titulo" class="video-intro__title">Uma nova experiência para Arujá</h2>
+          <h2 class="video-intro__title">Uma nova experiência para Arujá</h2>
         </div>
         <p class="video-intro__text anim-fade-up">Um projeto pensado para transformar a forma de viver, conviver e consumir. Arquitetura contemporânea, gastronomia, entretenimento, serviços e grandes marcas integrados em um ambiente aberto, moderno e conectado à cidade.</p>
       </div>
@@ -301,11 +302,11 @@
           <p class="stat-card__label">Anos de atuação em expansão comercial</p>
         </div>
         <div class="stat-card anim-fade-up">
-          <p class="stat-card__number">7</p>
+          <p class="stat-card__number">8</p>
           <p class="stat-card__label">Empreendimentos em operação</p>
         </div>
         <div class="stat-card anim-fade-up">
-          <p class="stat-card__number">5</p>
+          <p class="stat-card__number">4</p>
           <p class="stat-card__label">Em desenvolvimento até 2028</p>
         </div>
         <div class="stat-card anim-fade-up">
@@ -322,30 +323,12 @@
       <div class="section__header">
         <p class="section__eyebrow">Próximos lançamentos</p>
         <h2 id="lancamentos-titulo">O que estamos construindo agora</h2>
-        <p class="section__lead">Cinco empreendimentos em desenvolvimento até 2028 — acompanhe o que vem por aí no interior e na grande São Paulo.</p>
+        <p class="section__lead">Quatro empreendimentos em desenvolvimento até 2028 — acompanhe o que vem por aí no interior e na grande São Paulo.</p>
       </div>
       <div class="carousel" data-carousel role="group" aria-roledescription="carrossel" aria-label="Empreendimentos em lançamento">
         <div class="carousel__viewport">
           <ul class="carousel__track">
-            <li class="carousel__slide" aria-roledescription="slide" aria-label="KM 35 Center Mall — 1 de 5" data-venture-href="empreendimento-km35.html">
-              <a class="venture-open" href="empreendimento-km35.html" aria-label="Ver a página do KM 35 Center Mall"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-              <div class="carousel__media">
-                <span class="badge badge--pipeline carousel__badge">Em desenvolvimento</span>
-                <img src="assets/img/empreendimentos/km35-3.jpg" alt="Render do KM 35 Center Mall, com previsão de inauguração em setembro de 2026" width="924" height="482" loading="lazy" decoding="async">
-              </div>
-              <div class="carousel__body">
-                <h3>KM 35 Center Mall</h3>
-                <p class="carousel__tagline">Um novo centro de conveniência para Itaquaquecetuba.</p>
-                <ul class="venture-meta">
-                  <li class="venture-meta__item venture-meta__item--date"><svg class="venture-meta__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span><span class="visually-hidden">Inauguração: </span>Previsão: setembro de 2026</span></li>
-                  <li><a class="venture-meta__item venture-loc" href="https://www.google.com/maps/search/?api=1&amp;query=Rod.+Alberto+Hinoto%2C+3135+-+Jardim+Itapua%2C+Itaquaquecetuba+-+SP%2C+08599-515" target="_blank" rel="noopener" data-maps="Rod. Alberto Hinoto, 3135 - Jardim Itapua, Itaquaquecetuba - SP, 08599-515"><svg class="venture-meta__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span><span class="visually-hidden">Localização: </span>Rod. Alberto Hinoto, 3135 – Jardim Itapuã, Itaquaquecetuba/SP<span class="visually-hidden"> (abre o Google Maps em nova aba)</span></span></a></li>
-                </ul>
-                <p class="venture-meta__label">Lojas e serviços</p>
-                <ul class="carousel__partners" aria-label="Lojas e serviços"><li>Sukiya</li><li>Smart Fit</li><li>Casa Bauducco</li><li>McDonald's</li></ul>
-                <a class="btn-secondary carousel__cta" href="empreendimento-km35.html">Conhecer o projeto</a>
-              </div>
-            </li>
-            <li class="carousel__slide" aria-roledescription="slide" aria-label="Jundiapeba — 2 de 5" data-venture-href="empreendimento-jundiapeba.html">
+            <li class="carousel__slide" aria-roledescription="slide" aria-label="Jundiapeba — 1 de 4" data-venture-href="empreendimento-jundiapeba.html">
               <a class="venture-open" href="empreendimento-jundiapeba.html" aria-label="Ver a página do Jundiapeba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
               <div class="carousel__media">
                 <span class="badge badge--pipeline carousel__badge">Em desenvolvimento</span>
@@ -363,7 +346,7 @@
                 <a class="btn-secondary carousel__cta" href="empreendimento-jundiapeba.html">Conhecer o projeto</a>
               </div>
             </li>
-            <li class="carousel__slide" aria-roledescription="slide" aria-label="Unique Garden Arujá Mall — 3 de 5" data-venture-href="empreendimento-aruja.html">
+            <li class="carousel__slide" aria-roledescription="slide" aria-label="Unique Garden Arujá Mall — 2 de 4" data-venture-href="empreendimento-aruja.html">
               <a class="venture-open" href="empreendimento-aruja.html" aria-label="Ver a página do Unique Garden Arujá Mall"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
               <div class="carousel__media">
                 <span class="badge badge--pipeline carousel__badge">Em desenvolvimento</span>
@@ -381,7 +364,7 @@
                 <a class="btn-secondary carousel__cta" href="empreendimento-aruja.html">Conhecer o projeto</a>
               </div>
             </li>
-            <li class="carousel__slide" aria-roledescription="slide" aria-label="Unique Garden Arujá Mall II — 4 de 5" data-venture-href="empreendimento-aruja-2.html">
+            <li class="carousel__slide" aria-roledescription="slide" aria-label="Unique Garden Arujá Mall II — 3 de 4" data-venture-href="empreendimento-aruja-2.html">
               <a class="venture-open" href="empreendimento-aruja-2.html" aria-label="Ver a página do Unique Garden Arujá Mall II"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
               <div class="carousel__media">
                 <span class="badge badge--pipeline carousel__badge">Em desenvolvimento</span>
@@ -399,7 +382,7 @@
                 <a class="btn-secondary carousel__cta" href="empreendimento-aruja-2.html">Conhecer o projeto</a>
               </div>
             </li>
-            <li class="carousel__slide" aria-roledescription="slide" aria-label="Rota do Sol — 5 de 5" data-venture-href="empreendimento-rota-do-sol.html">
+            <li class="carousel__slide" aria-roledescription="slide" aria-label="Rota do Sol — 4 de 4" data-venture-href="empreendimento-rota-do-sol.html">
               <a class="venture-open" href="empreendimento-rota-do-sol.html" aria-label="Ver a página do Rota do Sol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
               <div class="carousel__media">
                 <span class="badge badge--pipeline carousel__badge">Em desenvolvimento</span>
@@ -424,8 +407,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"/></svg>
           </button>
           <div class="carousel__dots">
-            <button class="carousel__dot" type="button" data-carousel-dot aria-label="Ir para: KM 35 Center Mall" aria-current="true"></button>
-            <button class="carousel__dot" type="button" data-carousel-dot aria-label="Ir para: Jundiapeba" aria-current="false"></button>
+            <button class="carousel__dot" type="button" data-carousel-dot aria-label="Ir para: Jundiapeba" aria-current="true"></button>
             <button class="carousel__dot" type="button" data-carousel-dot aria-label="Ir para: Unique Garden Arujá Mall" aria-current="false"></button>
             <button class="carousel__dot" type="button" data-carousel-dot aria-label="Ir para: Unique Garden Arujá Mall II" aria-current="false"></button>
             <button class="carousel__dot" type="button" data-carousel-dot aria-label="Ir para: Rota do Sol" aria-current="false"></button>
@@ -435,22 +417,6 @@
           </button>
         </div>
         <p class="visually-hidden" data-carousel-status aria-live="off" aria-atomic="true"></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- QUEM SOMOS -->
-  <section class="section" aria-labelledby="quem-somos-titulo">
-    <div class="container two-col">
-      <div class="anim-fade-left">
-        <p class="section__eyebrow">Quem somos</p>
-        <h2 id="quem-somos-titulo" style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--color-border)">Transformamos rotas estratégicas em destinos completos, desde 2008.</h2>
-        <p class="sobre-empresa" style="text-align: justify">A Unique Garden Malls nasceu para transformar a experiência urbana por meio de centros comerciais modernos e integrados ao cotidiano das pessoas. Desde 2008, acumulamos 18 anos de expertise em expansão comercial e desenvolvimento imobiliário, atuando ao lado de grandes marcas do varejo nacional.</p>
-        <p style="text-align: justify">Nossos empreendimentos reúnem conveniência, gastronomia, serviços e lazer em espaços planejados para gerar fluxo, valorização e experiência real para quem frequenta e para quem investe. O modelo cobre cada etapa: dos estudos de mercado à captação de parceiros, até a inauguração e a operação contínua do empreendimento.</p>
-        <p style="text-align: justify">Mais do que centros comerciais, construímos destinos que conectam pessoas, marcas e desenvolvimento regional — com um pipeline ativo de 5 novos projetos previstos até 2028 no interior e na grande São Paulo.</p>
-      </div>
-      <div class="media-frame anim-fade-right">
-        <img src="assets/img/empreendimentos/sao-bento-1.jpg" alt="Fachada do São Bento Mall, empreendimento da Unique Garden Malls inaugurado em dezembro de 2023" width="732" height="476" loading="lazy" decoding="async">
       </div>
     </div>
   </section>
@@ -482,7 +448,7 @@
         <article class="card anim-fade-up">
           <div class="card__icon" aria-hidden="true">4</div>
           <h3>Pipeline de expansão ativo</h3>
-          <p>Cinco novos empreendimentos em desenvolvimento até 2028, garantindo geração contínua de valor em escala no interior e na grande São Paulo.</p>
+          <p>Quatro novos empreendimentos em desenvolvimento até 2028, garantindo geração contínua de valor em escala no interior e na grande São Paulo.</p>
         </article>
         <article class="card anim-fade-up">
           <div class="card__icon" aria-hidden="true">5</div>
@@ -508,7 +474,7 @@
         <p class="section__eyebrow">Para lojistas e marcas</p>
         <h2 id="lojistas-titulo" style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--color-border)">Leve sua operação para rotas de alto fluxo, ao lado de grandes marcas</h2>
         <p style="text-align: justify">Empreendimentos da Unique Garden Malls reúnem tenant mix consolidado com nomes como McDonald's, Burger King, KFC, Smart Fit, Pague Menos, Ipiranga, Drogasil, Swift, Pão de Açúcar e Madero. Sua marca entra em um ambiente já validado, com fluxo, visibilidade e público formado.</p>
-        <p style="text-align: justify">Já são 62 operações monousuárias inauguradas em pontos estratégicos, além das lojas integradas aos 7 empreendimentos operacionais. O processo de captação de players é conduzido com estudo de viabilidade comercial e contagem de fluxo antes de cada negociação.</p>
+        <p style="text-align: justify">Já são 62 operações monousuárias inauguradas em pontos estratégicos, além das lojas integradas aos 8 empreendimentos operacionais. O processo de captação de players é conduzido com estudo de viabilidade comercial e contagem de fluxo antes de cada negociação.</p>
       </div>
     </div>
     <div class="text-center mt-16">
@@ -531,7 +497,7 @@
         </article>
         <article class="card anim-fade-up">
           <h3>Pipeline ativo até 2028</h3>
-          <p>Cinco novos empreendimentos em desenvolvimento — KM 35 Center Mall, Jundiapeba, Unique Garden Arujá Mall (fases I e II) e Rota do Sol — ampliam a geração de valor ano após ano.</p>
+          <p>Quatro novos empreendimentos em desenvolvimento — Jundiapeba, Unique Garden Arujá Mall (fases I e II) e Rota do Sol — ampliam a geração de valor ano após ano.</p>
         </article>
       </div>
       <div class="text-center mt-16">
@@ -546,12 +512,29 @@
       <div class="section__header" style="max-width: 900px">
         <p class="section__eyebrow">Portfólio</p>
         <h2 id="portfolio-titulo" style="text-wrap: balance">Empreendimentos entregues e consolidados</h2>
-        <p class="section__lead">7 empreendimentos operacionais, ancorados por marcas como McDonald's, Burger King e Smart Fit.</p>
+        <p class="section__lead">8 empreendimentos operacionais, ancorados por marcas como McDonald's, Burger King e Smart Fit.</p>
       </div>
       <div class="carousel" data-carousel role="group" aria-roledescription="carrossel" aria-label="Empreendimentos entregues e consolidados">
         <div class="carousel__viewport">
           <ul class="carousel__track">
-            <li class="carousel__slide" aria-roledescription="slide" aria-label="Sakamoto Open Mall — 1 de 4" data-venture-href="empreendimento-sakamoto.html">
+            <li class="carousel__slide" aria-roledescription="slide" aria-label="KM 35 Center Mall — 1 de 5" data-venture-href="empreendimento-km35.html">
+              <a class="venture-open" href="empreendimento-km35.html" aria-label="Ver a página do KM 35 Center Mall"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+              <div class="carousel__media">
+                <span class="badge badge--operacional carousel__badge">Operacional</span>
+                <img src="assets/img/empreendimentos/km35-3.jpg" alt="KM 35 Center Mall, empreendimento da Unique Garden Malls inaugurado em setembro de 2026" width="924" height="482" loading="lazy" decoding="async">
+              </div>
+              <div class="carousel__body">
+                <h3>KM 35 Center Mall</h3>
+                <p class="carousel__tagline">Um novo centro de conveniência para Itaquaquecetuba.</p>
+                <ul class="venture-meta">
+                  <li class="venture-meta__item venture-meta__item--date"><svg class="venture-meta__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span><span class="visually-hidden">Inauguração: </span>Inaugurado em setembro de 2026</span></li>
+                  <li><a class="venture-meta__item venture-loc" href="https://www.google.com/maps/search/?api=1&amp;query=Rod.+Alberto+Hinoto%2C+3135+-+Jardim+Itapua%2C+Itaquaquecetuba+-+SP%2C+08599-515" target="_blank" rel="noopener" data-maps="Rod. Alberto Hinoto, 3135 - Jardim Itapua, Itaquaquecetuba - SP, 08599-515"><svg class="venture-meta__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span><span class="visually-hidden">Localização: </span>Rod. Alberto Hinoto, 3135 – Jardim Itapuã, Itaquaquecetuba/SP<span class="visually-hidden"> (abre o Google Maps em nova aba)</span></span></a></li>
+                </ul>
+                <p class="venture-meta__label">Lojas e serviços</p>
+                <ul class="carousel__partners" aria-label="Lojas e serviços"><li>Sukiya</li><li>Smart Fit</li><li>Casa Bauducco</li><li>McDonald's</li></ul>
+              </div>
+            </li>
+            <li class="carousel__slide" aria-roledescription="slide" aria-label="Sakamoto Open Mall — 2 de 5" data-venture-href="empreendimento-sakamoto.html">
               <a class="venture-open" href="empreendimento-sakamoto.html" aria-label="Ver a página do Sakamoto Open Mall"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
               <div class="carousel__media">
                 <span class="badge badge--operacional carousel__badge">Operacional</span>
@@ -568,7 +551,7 @@
                 <ul class="carousel__partners" aria-label="Lojas e serviços"><li>McDonald's</li><li>Burger King</li><li>Madero</li><li>Casa Bauducco</li><li>Bauducco</li><li>Maria Pitanga</li><li>Cobasi</li><li>Fábrica de Monstro</li><li>Atlanta</li><li>Rito</li><li>Casa Ingá</li></ul>
               </div>
             </li>
-            <li class="carousel__slide" aria-roledescription="slide" aria-label="Itapref — 2 de 4" data-venture-href="empreendimento-itapref.html">
+            <li class="carousel__slide" aria-roledescription="slide" aria-label="Itapref — 3 de 5" data-venture-href="empreendimento-itapref.html">
               <a class="venture-open" href="empreendimento-itapref.html" aria-label="Ver a página do Itapref"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
               <div class="carousel__media">
                 <span class="badge badge--operacional carousel__badge">Operacional</span>
@@ -585,7 +568,7 @@
                 <ul class="carousel__partners" aria-label="Lojas e serviços"><li>McDonald's</li><li>Burger King</li><li>Swift</li><li>Drogasil</li></ul>
               </div>
             </li>
-            <li class="carousel__slide" aria-roledescription="slide" aria-label="São Bento Mall — 3 de 4" data-venture-href="empreendimento-sao-bento.html">
+            <li class="carousel__slide" aria-roledescription="slide" aria-label="São Bento Mall — 4 de 5" data-venture-href="empreendimento-sao-bento.html">
               <a class="venture-open" href="empreendimento-sao-bento.html" aria-label="Ver a página do São Bento Mall"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
               <div class="carousel__media">
                 <span class="badge badge--operacional carousel__badge">Operacional</span>
@@ -602,7 +585,7 @@
                 <ul class="carousel__partners" aria-label="Lojas e serviços"><li>Bluefit</li><li>Drogal</li><li>Villa Sucrée</li><li>Verace</li><li>Burger King</li></ul>
               </div>
             </li>
-            <li class="carousel__slide" aria-roledescription="slide" aria-label="Unique Garden Arujá Mall — 4 de 4" data-venture-href="empreendimento-aruja.html">
+            <li class="carousel__slide" aria-roledescription="slide" aria-label="Unique Garden Arujá Mall — 5 de 5" data-venture-href="empreendimento-aruja.html">
               <a class="venture-open" href="empreendimento-aruja.html" aria-label="Ver a página do Unique Garden Arujá Mall"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
               <div class="carousel__media">
                 <span class="badge badge--pipeline carousel__badge">Em desenvolvimento</span>
@@ -626,7 +609,8 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"/></svg>
           </button>
           <div class="carousel__dots">
-            <button class="carousel__dot" type="button" data-carousel-dot aria-label="Ir para: Sakamoto Open Mall" aria-current="true"></button>
+            <button class="carousel__dot" type="button" data-carousel-dot aria-label="Ir para: KM 35 Center Mall" aria-current="true"></button>
+            <button class="carousel__dot" type="button" data-carousel-dot aria-label="Ir para: Sakamoto Open Mall" aria-current="false"></button>
             <button class="carousel__dot" type="button" data-carousel-dot aria-label="Ir para: Itapref" aria-current="false"></button>
             <button class="carousel__dot" type="button" data-carousel-dot aria-label="Ir para: São Bento Mall" aria-current="false"></button>
             <button class="carousel__dot" type="button" data-carousel-dot aria-label="Ir para: Unique Garden Arujá Mall" aria-current="false"></button>
@@ -660,7 +644,7 @@
             </button>
           </h3>
           <div class="faq-item__answer" id="faq-1" data-open="false" role="region" aria-labelledby="faq-1-q">
-            <p>Open Malls são centros comerciais a céu aberto que reúnem grandes marcas âncora, serviços e alimentação em rotas de alto fluxo. A Unique Garden Malls desenvolve esse formato desde 2008, com 7 empreendimentos operacionais e 62 operações monousuárias já inauguradas no interior e na grande São Paulo.</p>
+            <p>Open Malls são centros comerciais a céu aberto que reúnem grandes marcas âncora, serviços e alimentação em rotas de alto fluxo. A Unique Garden Malls desenvolve esse formato desde 2008, com 8 empreendimentos operacionais e 62 operações monousuárias já inauguradas no interior e na grande São Paulo.</p>
           </div>
         </div>
         <div class="faq-item">
@@ -753,6 +737,7 @@
         <h2 class="footer-heading">Navegação</h2>
         <ul class="footer-links">
           <li><a href="index.html">Início</a></li>
+          <li><a href="quem-somos.html">Quem somos</a></li>
           <li><a href="empreendimentos.html">Empreendimentos</a></li>
           <li><a href="investidores.html">Investidores</a></li>
           <li><a href="proprietarios.html">Proprietários</a></li>

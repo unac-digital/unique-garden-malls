@@ -7,7 +7,7 @@
 
   /* ---- Video de fundo do hero ---- */
   /* O CSS ja esconde o video no modo "reduzir movimento", mas escondido ele
-     ainda baixaria 3 MB. Aqui a fonte e removida antes disso acontecer. */
+     ainda baixaria até 5 MB. Aqui a fonte e removida antes disso acontecer. */
   (function () {
     var heroVideo = document.querySelector('.hero__video');
     if (!heroVideo) return;

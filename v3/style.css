@@ -612,30 +612,6 @@ address { font-style: normal; }
 .hero__subtitle { animation: heroFadeUp 0.7s ease 0.2s backwards; }
 .hero__cta      { animation: heroFadeUp 0.7s ease 0.32s backwards; }
 
-/* ---- Vídeo institucional dentro do hero (home) ---- */
-/* Computador: texto e vídeo dividem o hero em duas colunas, com o título um
-   pouco menor para tudo caber na primeira tela. Celular e tablet em pé: o card
-   fica embaixo dos botões. Sem o max-height do hero de coluna única, que
-   cortaria o conteúdo. */
-.hero__inner--split { max-height: none !important; }
-.hero__video-card {
-  width: 100%;
-  max-width: 640px;
-  margin-top: var(--space-10);
-  animation: heroFadeUp 0.7s ease 0.44s backwards;
-}
-@media (min-width: 901px) {
-  .hero__inner--split {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-    column-gap: var(--space-10);
-  }
-  .hero__inner--split .hero__title { font-size: clamp(2.3rem, 3.7vw, 3.5rem); }
-  .hero__inner--split .hero__subtitle { font-size: var(--font-md); }
-  .hero__inner--split .hero__video-card { max-width: none; margin-top: 0; }
-}
-@media (max-width: 900px) {
-  .hero__video-card { margin-top: var(--space-8); }
-}
 
 /* ---- Animações ao rolar ---- */
 .anim-fade-up {
@@ -665,7 +641,7 @@ address { font-style: normal; }
     scroll-behavior: auto !important;
   }
   .anim-fade-up, .anim-zoom-in { opacity: 1; transform: none; }
-  .hero__eyebrow, .hero__title, .hero__subtitle, .hero__cta, .hero__video-card { opacity: 1; }
+  .hero__eyebrow, .hero__title, .hero__subtitle, .hero__cta { opacity: 1; }
 }
 
 /* ---- Estatísticas ---- */
@@ -1482,9 +1458,28 @@ address { font-style: normal; }
 /* O título aqui é curto: sem isto o bloco encolheria e ficaria encostado à
    esquerda (o hero do computador alinha à esquerda), com o texto centralizado
    dentro dele. */
-.venture-hero.hero--compact { min-height: 52vh; min-height: 52svh; }
-.venture-hero .hero__inner { justify-items: center; text-align: center; }
-.venture-hero .hero__subtitle { margin-left: auto; margin-right: auto; }
+.venture-hero.hero--compact,
+.page-hero.hero--compact { min-height: 52vh; min-height: 52svh; }
+.venture-hero .hero__inner,
+.page-hero .hero__inner { justify-items: center; text-align: center; }
+.venture-hero .hero__subtitle,
+.page-hero .hero__subtitle { margin-left: auto; margin-right: auto; }
+/* Título da página Quem somos é uma frase longa: limita a largura da linha */
+.page-hero .hero__title { max-width: 900px; }
+
+/* ---- Página Quem somos ---- */
+.about { align-items: center; }
+.about__text p {
+  font-size: var(--font-md);
+  line-height: var(--leading-relaxed);
+  text-align: justify;
+  hyphens: auto;   /* com lang="pt-BR", divide sílabas e evita buracos entre palavras */
+}
+/* Celular: coluna estreita abre "rios" no justificado; segue o padrão do site */
+@media (max-width: 767px) {
+  .about__text p { text-align: left; }
+}
+.about__text p + p { margin-top: var(--space-5); }
 .venture-breadcrumb {
   display: flex;
   flex-wrap: wrap;
@@ -2030,8 +2025,6 @@ address { font-style: normal; }
 .video-intro__title {
   font-size: var(--font-3xl);
 }
-/* Sem o vídeo acima (ele foi para o hero), o texto abre a seção */
-.video-showcase .video-intro:first-child { margin-top: 0; }
 /* Fio dourado separando as duas colunas, como divisória editorial */
 .video-intro__text {
   font-size: var(--font-md);
