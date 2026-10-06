@@ -641,7 +641,8 @@
   function initVSlider(root) {
     var viewport = root.querySelector('.vslider__viewport');
     var track = root.querySelector('.vslider__track');
-    var items = Array.prototype.slice.call(track.children);
+    /* Cards com o atributo hidden (guardados para o futuro) não entram na conta */
+    var items = Array.prototype.slice.call(track.children).filter(function (el) { return !el.hidden; });
     var prevBtn = root.querySelector('[data-vslider-prev]');
     var nextBtn = root.querySelector('[data-vslider-next]');
     var dotsBox = root.querySelector('[data-vslider-dots]');
