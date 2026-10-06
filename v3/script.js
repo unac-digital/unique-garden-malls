@@ -459,7 +459,13 @@
       statusBox.setAttribute('role', 'status');
       statusBox.textContent = '';
       requestAnimationFrame(function () {
-        statusBox.textContent = 'Recebemos os dados! Vamos abrir o WhatsApp com sua mensagem pronta — é só confirmar o envio por lá. Se preferir, escreva para contato@uniquegardenmalls.com.';
+        statusBox.textContent = 'Recebemos os dados! Vamos abrir o WhatsApp com sua mensagem pronta — é só confirmar o envio por lá. Se preferir, escreva para ';
+        /* O e-mail vira link: o clique abre o aplicativo de e-mail da pessoa */
+        var emailLink = document.createElement('a');
+        emailLink.href = 'mailto:contato@uniquegardenmalls.com.br?subject=Contato%20pelo%20site';
+        emailLink.textContent = 'contato@uniquegardenmalls.com.br';
+        statusBox.appendChild(emailLink);
+        statusBox.appendChild(document.createTextNode('.'));
       });
 
       window.open(url, '_blank', 'noopener');
