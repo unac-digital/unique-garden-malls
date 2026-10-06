@@ -1,0 +1,53 @@
+COMO PUBLICAR O SITE — Unique Garden Malls
+============================================
+
+O QUE É ESTE PACOTE
+-------------------
+Site estático completo (HTML + CSS + JS + imagens). Não precisa de banco de
+dados, PHP ou qualquer instalação — basta copiar os arquivos para o servidor.
+
+ESTRUTURA (não altere nomes nem pastas)
+---------------------------------------
+  index.html              → página inicial
+  empreendimentos.html    → portfólio e pipeline
+  investidores.html       → página para investidores
+  proprietarios.html      → página para proprietários de terrenos
+  contato.html            → contato e formulário
+  style.css               → todos os estilos (temas Garden e Light)
+  script.js               → carrosséis, menu, animações, temas
+  robots.txt              → instruções para buscadores
+  sitemap.xml             → mapa do site para o Google
+  assets/
+    fonts/Queensila.ttf   → fonte da marca
+    img/brand/            → logos
+    img/empreendimentos/  → fotos e renders dos empreendimentos
+    img/monousuarias/     → fotos das operações monousuárias
+
+COMO SUBIR (hospedagem comum — cPanel, HostGator, Locaweb, etc.)
+----------------------------------------------------------------
+1. Acesse o gerenciador de arquivos ou FTP da sua hospedagem.
+2. Abra a pasta pública do domínio (geralmente "public_html", "www" ou "htdocs").
+3. Envie TODO o conteúdo desta pasta para lá — os arquivos .html, .css, .js,
+   .txt, .xml e a pasta "assets" inteira (mantendo a estrutura).
+4. Pronto. Acesse seu domínio: a página inicial (index.html) abre sozinha.
+
+IMPORTANTE
+----------
+• A pasta "assets" precisa ficar NO MESMO NÍVEL dos arquivos .html.
+  (ex.: public_html/index.html e public_html/assets/...)
+• Envie os arquivos com codificação/transferência binária pelo FTP quando
+  perguntado (o modo automático dos clientes FTP modernos já resolve).
+• As fontes de apoio (Playfair Display e Manrope) carregam do Google Fonts,
+  então o site precisa de internet — nada a configurar.
+• O formulário de contato abre o WhatsApp com a mensagem preenchida — não
+  depende de servidor de e-mail.
+• Se o seu domínio NÃO for uniquegardenmalls.com.br, edite:
+  - sitemap.xml  → troque as 5 URLs pelo seu domínio
+  - robots.txt   → troque a URL da última linha (Sitemap:)
+  - (opcional) nas páginas .html, as tags <link rel="canonical"> e
+    "og:url"/"og:image" no <head> apontam para uniquegardenmalls.com.br
+
+HTTPS (recomendado)
+-------------------
+Ative o certificado SSL gratuito da sua hospedagem (Let's Encrypt) para o
+site abrir com cadeado. Nenhuma mudança nos arquivos é necessária.

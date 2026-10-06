@@ -1,0 +1,37 @@
+User-agent: *
+Allow: /
+Disallow: /v1/
+Disallow: /v2/
+Disallow: /v3/
+
+User-agent: GPTBot
+Allow: /
+Disallow: /v1/
+Disallow: /v2/
+Disallow: /v3/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /v1/
+Disallow: /v2/
+Disallow: /v3/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /v1/
+Disallow: /v2/
+Disallow: /v3/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /v1/
+Disallow: /v2/
+Disallow: /v3/
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /v1/
+Disallow: /v2/
+Disallow: /v3/
+
+Sitemap: https://uniquegardenmalls.com.br/sitemap.xml
