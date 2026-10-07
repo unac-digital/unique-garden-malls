@@ -612,6 +612,7 @@ address { font-style: normal; }
 .hero__subtitle { animation: heroFadeUp 0.7s ease 0.2s backwards; }
 .hero__cta      { animation: heroFadeUp 0.7s ease 0.32s backwards; }
 
+
 /* ---- Animações ao rolar ---- */
 .anim-fade-up {
   opacity: 0;
@@ -983,6 +984,7 @@ address { font-style: normal; }
   }
 }
 .faq-item__icon {
+  position: relative;
   flex-shrink: 0;
   width: 28px;
   height: 28px;
@@ -993,8 +995,25 @@ address { font-style: normal; }
   align-items: center;
   justify-content: center;
   transition: transform 0.25s ease, background-color 0.2s ease, color 0.2s ease;
-  font-size: var(--font-md);
+  /* O "+" do HTML fica invisível: o caractere da fonte não cai no centro
+     exato do círculo. O sinal é desenhado com duas barras centralizadas
+     pela geometria do círculo, e o giro de 45° vira o "×" sem sair do lugar. */
+  font-size: 0;
+  line-height: 0;
 }
+.faq-item__icon::before,
+.faq-item__icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+}
+.faq-item__icon::after { transform: translate(-50%, -50%) rotate(90deg); }
 .faq-item__question[aria-expanded="true"] .faq-item__icon { transform: rotate(45deg); }
 .faq-item__answer {
   overflow: hidden;
@@ -1122,8 +1141,11 @@ address { font-style: normal; }
 /* ---- Contato direto ---- */
 .contact-info {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--space-6);
+}
+@media (max-width: 1100px) {
+  .contact-info { grid-template-columns: repeat(2, 1fr); }
 }
 .contact-info__item {
   background: var(--color-surface);
@@ -1334,6 +1356,134 @@ address { font-style: normal; }
 }
 .carousel__cta { margin-top: var(--space-3); }
 
+/* ==========================================================================
+   Vitrine de empreendimentos: vários cards lado a lado, como em um
+   catálogo — imagem em cima; nome, frase, data, local e lojas embaixo.
+   4 por vez no computador largo, 3 no notebook, 2 no tablet, 1 no celular.
+   ========================================================================== */
+.vslider {
+  position: relative;
+  --per-view: 1;
+  --vs-gap: var(--space-6);
+}
+/* Folga em volta para a sombra dos cards não ser cortada pelo overflow */
+.vslider__viewport {
+  overflow: hidden;
+  margin: -6px -6px -14px;
+  padding: 6px 6px 14px;
+}
+.vslider__track {
+  display: flex;
+  gap: var(--vs-gap);
+  touch-action: pan-y;
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.vslider__item {
+  flex: 0 0 calc((100% - (var(--per-view) - 1) * var(--vs-gap)) / var(--per-view));
+  min-width: 0;
+}
+.vslider__item[hidden] { display: none; }
+.vcard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.vcard__thumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+.vcard__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.vcard:hover .vcard__thumb img { transform: scale(1.06); }
+/* Empreendimento ainda sem foto: o logo no lugar, discreto */
+.vcard__thumb--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 40%, var(--color-surface-light), var(--color-surface) 70%);
+}
+.vcard__thumb--empty img { width: 46%; height: auto; object-fit: contain; opacity: 0.55; }
+.vcard:hover .vcard__thumb--empty img { transform: scale(1.04); }
+.vcard__badge {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: 1;
+}
+.vcard .venture-open { top: var(--space-3); right: var(--space-3); width: 40px; height: 40px; }
+.vcard__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding-top: var(--space-5);
+}
+.vcard__name {
+  font-family: var(--font-body);
+  font-size: var(--font-sm);
+  font-weight: var(--font-bold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  line-height: var(--leading-snug);
+  color: var(--color-accent);
+}
+.vcard__tagline {
+  font-family: var(--font-display);
+  font-size: var(--font-md);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-snug);
+  color: var(--color-heading);
+}
+.vcard__meta { margin-top: var(--space-1); }
+.vcard__stores {
+  margin-top: var(--space-1);
+  font-size: var(--font-sm);
+  line-height: var(--leading-snug);
+  color: var(--color-muted);
+}
+.vcard__stores-label {
+  display: block;
+  margin-bottom: 2px;
+  font-size: var(--font-xs);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+.vcard__stores .is-pending { font-style: italic; }
+/* Setas centralizadas na altura das imagens (o JS mede a imagem em --thumb-h) */
+.vslider__arrow {
+  position: absolute;
+  top: calc(var(--thumb-h, 220px) / 2);
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  transform: translateY(-50%);
+  box-shadow: var(--shadow-card);
+}
+.vslider__arrow:hover { transform: translateY(-50%) scale(1.06); }
+.vslider__arrow--prev { left: -22px; }
+.vslider__arrow--next { right: -22px; }
+.vslider__dots { justify-content: center; margin-top: var(--space-8); }
+/* Todos os cards cabem na tela: sem setas nem pontos */
+.vslider--static .vslider__arrow,
+.vslider--static .vslider__dots { display: none; }
+@media (max-width: 767px) {
+  /* Margem lateral do celular é estreita: setas por dentro, sobre a imagem */
+  .vslider__arrow--prev { left: var(--space-2); }
+  .vslider__arrow--next { right: var(--space-2); }
+  .vslider__dots { margin-top: var(--space-6); }
+}
+
 /* ---- Dados do empreendimento nos cards: data, localização e lojas ---- */
 .carousel__tagline {
   font-family: var(--font-display);
@@ -1457,9 +1607,28 @@ address { font-style: normal; }
 /* O título aqui é curto: sem isto o bloco encolheria e ficaria encostado à
    esquerda (o hero do computador alinha à esquerda), com o texto centralizado
    dentro dele. */
-.venture-hero.hero--compact { min-height: 52vh; min-height: 52svh; }
-.venture-hero .hero__inner { justify-items: center; text-align: center; }
-.venture-hero .hero__subtitle { margin-left: auto; margin-right: auto; }
+.venture-hero.hero--compact,
+.page-hero.hero--compact { min-height: 52vh; min-height: 52svh; }
+.venture-hero .hero__inner,
+.page-hero .hero__inner { justify-items: center; text-align: center; }
+.venture-hero .hero__subtitle,
+.page-hero .hero__subtitle { margin-left: auto; margin-right: auto; }
+/* Título da página Quem somos é uma frase longa: limita a largura da linha */
+.page-hero .hero__title { max-width: 900px; }
+
+/* ---- Página Quem somos ---- */
+.about { align-items: center; }
+.about__text p {
+  font-size: var(--font-md);
+  line-height: var(--leading-relaxed);
+  text-align: justify;
+  hyphens: auto;   /* com lang="pt-BR", divide sílabas e evita buracos entre palavras */
+}
+/* Celular: coluna estreita abre "rios" no justificado; segue o padrão do site */
+@media (max-width: 767px) {
+  .about__text p { text-align: left; }
+}
+.about__text p + p { margin-top: var(--space-5); }
 .venture-breadcrumb {
   display: flex;
   flex-wrap: wrap;
